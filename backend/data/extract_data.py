@@ -18,8 +18,8 @@ with open('yelp_academic_dataset_business.json', 'r', encoding='utf-8') as f:
 
 df = pd.DataFrame(data)
 
-# Filter only restaurants
-restaurants = df[df['categories'].str.contains('Restaurant', na=False)]
+# Filter only restaurants and food-related businesses
+restaurants = df[df['categories'].str.contains('Restaurant|Food', na=False)]
 
 # Extract columns
 restaurants_df = restaurants[['business_id', 'name', 'city', 'latitude', 'longitude', 'stars', 'review_count', 'attributes', 'categories']]

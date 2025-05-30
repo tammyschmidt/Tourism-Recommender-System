@@ -1,0 +1,555 @@
+Total number of excluded categories: 552
+
+Excluded categories:
+- Accessories
+- Accountants
+- Active Life
+- Acupuncture
+- Adult
+- Adult Education
+- Adult Entertainment
+- Advertising
+- Air Duct Cleaning
+- Airlines
+- Airport Lounges
+- Airport Shuttles
+- Airport Terminals
+- Airports
+- Alternative Medicine
+- Amateur Sports Teams
+- Amusement Parks
+- Animal Shelters
+- Antiques
+- Apartments
+- Appliances
+- Appliances & Repair
+- Aquariums
+- Arcades
+- Architects
+- Architectural Tours
+- Art Classes
+- Art Galleries
+- Art Museums
+- Art Schools
+- Art Supplies
+- Art Tours
+- Arts & Crafts
+- Arts & Entertainment
+- Attraction Farms
+- Auction Houses
+- Audio/Visual Equipment Rental
+- Auto Customization
+- Auto Detailing
+- Auto Glass Services
+- Auto Loan Providers
+- Auto Parts & Supplies
+- Auto Repair
+- Automotive
+- Axe Throwing
+- Baby Gear & Furniture
+- Banks & Credit Unions
+- Bar Crawl
+- Barbers
+- Barre Classes
+- Bartenders
+- Battery Stores
+- Batting Cages
+- Beauty & Spas
+- Bespoke Clothing
+- Beverage Store
+- Bike Rentals
+- Bike Repair/Maintenance
+- Bike tours
+- Bikes
+- Billing Services
+- Blow Dry/Out Services
+- Boat Charters
+- Boat Repair
+- Boat Tours
+- Boating
+- Bocce Ball
+- Body Contouring
+- Body Shops
+- Bookkeepers
+- Books
+- Bookstores
+- Boot Camps
+- Botanical Gardens
+- Bounce House Rentals
+- Bowling
+- Brewing Supplies
+- Bridal
+- Buddhist Temples
+- Building Supplies
+- Bus Tours
+- Business Consulting
+- Business Law
+- CSA
+- Cabaret
+- Cabinetry
+- Cafeteria
+- Campgrounds
+- Candle Stores
+- Cannabis Clinics
+- Cannabis Dispensaries
+- Cannabis Tours
+- Car Dealers
+- Car Rental
+- Car Share Services
+- Car Stereo Installation
+- Car Wash
+- Car Window Tinting
+- Cardio Classes
+- Cards & Stationery
+- Carpet Cleaning
+- Casinos
+- Check Cashing/Pay-day Loans
+- Child Care & Day Care
+- Children's Clothing
+- Chinese Martial Arts
+- Chiropractors
+- Christmas Trees
+- Churches
+- Cinema
+- Climbing
+- Clothing Rental
+- Club Crawl
+- Colleges & Universities
+- Colonics
+- Comic Books
+- Commercial Real Estate
+- Commercial Truck Dealers
+- Commercial Truck Repair
+- Community Centers
+- Community Gardens
+- Community Service/Non-Profit
+- Computers
+- Concierge Medicine
+- Contract Law
+- Contractors
+- Convenience Stores
+- Cosmetic Surgeons
+- Cosmetics & Beauty Supply
+- Costumes
+- Counseling & Mental Health
+- Countertop Installation
+- Country Clubs
+- Country Dance Halls
+- Couriers & Delivery Services
+- Courthouses
+- Crane Services
+- Cultural Center
+- Custom Cakes
+- Customized Merchandise
+- Damage Restoration
+- Dance Clubs
+- Dance Schools
+- Dance Studios
+- Day Camps
+- Day Spas
+- Delicatessen
+- Dentists
+- Department Stores
+- Departments of Motor Vehicles
+- Dermatologists
+- Diagnostic Imaging
+- Diagnostic Services
+- Disc Golf
+- Discount Store
+- Divorce & Family Law
+- Do-It-Yourself Food
+- Doctors
+- Dog Parks
+- Donairs
+- Donburi
+- Drive-In Theater
+- Drive-Thru Bars
+- Drugstores
+- Dry Cleaning
+- Dry Cleaning & Laundry
+- EV Charging Stations
+- Education
+- Educational Services
+- Electricians
+- Electronics
+- Electronics Repair
+- Elementary Schools
+- Embroidery & Crochet
+- Emergency Rooms
+- Employment Law
+- Escape Games
+- Estheticians
+- Ethical Grocery
+- Event Planning & Services
+- Eyebrow Services
+- Eyelash Service
+- Eyewear & Opticians
+- Fabric Stores
+- Face Painting
+- Family Practice
+- Farming Equipment
+- Farms
+- Fashion
+- Festivals
+- Financial Advising
+- Financial Services
+- Fire Departments
+- Fireplace Services
+- Firewood
+- Fireworks
+- Fishing
+- Fitness & Instruction
+- Fitness/Exercise Equipment
+- Flea Markets
+- Flight Instruction
+- Floral Designers
+- Florists
+- Flowers & Gifts
+- Formal Wear
+- Framing
+- Funeral Services & Cemeteries
+- Furniture Reupholstery
+- Furniture Stores
+- Garage Door Services
+- Gardeners
+- Gas Stations
+- Gay Bars
+- Gemstones & Minerals
+- General Dentistry
+- General Litigation
+- Gift Shops
+- Go Karts
+- Golf
+- Golf Cart Rentals
+- Golf Equipment
+- Golf Lessons
+- Graphic Design
+- Grill Services
+- Grilling Equipment
+- Guest Houses
+- Gun/Rifle Ranges
+- Guns & Ammo
+- Gymnastics
+- Gyms
+- Hainan
+- Hair Extensions
+- Hair Loss Centers
+- Hair Removal
+- Hair Salons
+- Hair Stylists
+- Hardware Stores
+- Hats
+- Haunted Houses
+- Head Shops
+- Health & Medical
+- Health Coach
+- Health Markets
+- Health Retreats
+- Heating & Air Conditioning/HVAC
+- Herbal Shops
+- Herbs & Spices
+- Hiking
+- Hindu Temples
+- Historical Tours
+- Hobby Shops
+- Holiday Decorations
+- Home & Garden
+- Home Cleaning
+- Home Decor
+- Home Health Care
+- Home Organization
+- Home Services
+- Home Theatre Installation
+- Homeless Shelters
+- Homeowner Association
+- Horse Boarding
+- Horse Racing
+- Horseback Riding
+- Hospitals
+- Hostels
+- Hot Pot
+- Hunting & Fishing Supplies
+- Hydroponics
+- Hypnosis/Hypnotherapy
+- IT Services & Computer Repair
+- IV Hydration
+- Ice Delivery
+- Imported Food
+- Indoor Playcentre
+- Interior Design
+- Internal Medicine
+- Internet Service Providers
+- Investing
+- Irrigation
+- Jails & Prisons
+- Jewelry
+- Jewelry Repair
+- Junk Removal & Hauling
+- Keys & Locksmiths
+- Kids Activities
+- Kids Hair Salons
+- Kiosk
+- Kitchen & Bath
+- Kitchen Incubators
+- Kitchen Supplies
+- Knife Sharpening
+- Knitting Supplies
+- Kombucha
+- LAN Centers
+- Laboratory Testing
+- Landmarks & Historical Buildings
+- Landscape Architects
+- Landscaping
+- Laser Tag
+- Laundromat
+- Laundry Services
+- Lawn Services
+- Lawyers
+- Leather Goods
+- Legal Services
+- Leisure Centers
+- Libraries
+- Life Coach
+- Lighting Fixtures & Equipment
+- Lighting Stores
+- Livestock Feed & Supply
+- Mags
+- Mailbox Centers
+- Makeup Artists
+- Marinas
+- Marketing
+- Martial Arts
+- Mass Media
+- Massage
+- Massage Therapy
+- Maternity Wear
+- Mattresses
+- Meaderies
+- Medical Cannabis Referrals
+- Medical Centers
+- Medical Spas
+- Medical Supplies
+- Meditation Centers
+- Men's Clothing
+- Men's Hair Salons
+- Mini Golf
+- Mobile Phone Repair
+- Mobile Phones
+- Modern European
+- Motorcycle Dealers
+- Motorcycle Gear
+- Motorcycle Parts & Supplies
+- Mountain Biking
+- Movers
+- Municipality
+- Museums
+- Music & DVDs
+- Music & Video
+- Music Production Services
+- Music Venues
+- Musical Instruments & Teachers
+- Nail Salons
+- Nail Technicians
+- Naturopathic/Holistic
+- Neurologist
+- Newspapers & Magazines
+- Notaries
+- Nurseries & Gardening
+- Nutritionists
+- Office Cleaning
+- Office Equipment
+- Officiants
+- Oil Change Stations
+- Optometrists
+- Oral Surgeons
+- Organic Stores
+- Osteopathic Physicians
+- Osteopaths
+- Outdoor Furniture Stores
+- Outdoor Gear
+- Outlet Stores
+- Packing Services
+- Paddleboarding
+- Pain Management
+- Paint & Sip
+- Paint-Your-Own Pottery
+- Painters
+- Parenting Classes
+- Party Bus Rentals
+- Party Characters
+- Party Equipment Rentals
+- Party Supplies
+- Pawn Shops
+- Pediatricians
+- Pedicabs
+- Perfume
+- Personal Assistants
+- Personal Injury Law
+- Personal Shopping
+- Pest Control
+- Pet Adoption
+- Pet Boarding
+- Pet Groomers
+- Pet Photography
+- Pet Services
+- Pet Sitting
+- Pet Stores
+- Pet Training
+- Pharmacy
+- Photo Booth Rentals
+- Photographers
+- Photography Stores & Services
+- Physical Therapy
+- Pick Your Own Farms
+- Piercing
+- Pilates
+- Plastic Surgeons
+- Plumbing
+- Pop-up Shops
+- Popcorn Shops
+- Post Offices
+- Poutineries
+- Preschools
+- Pressure Washers
+- Print Media
+- Printing Services
+- Private Tutors
+- Professional Services
+- Professional Sports Teams
+- Propane
+- Property Management
+- Psychiatrists
+- Psychics
+- Psychologists
+- Public Markets
+- Public Services & Government
+- Public Transportation
+- Pumpkin Patches
+- RV Parks
+- RV Repair
+- Race Tracks
+- Radio Stations
+- Radiologists
+- Rafting/Kayaking
+- Real Estate
+- Real Estate Agents
+- Real Estate Law
+- Real Estate Services
+- Recording & Rehearsal Studios
+- Recreation Centers
+- Recycling Center
+- Reflexology
+- Reiki
+- Religious Items
+- Religious Organizations
+- Restaurant Supplies
+- Roadside Assistance
+- Rolfing
+- Roofing
+- Scavenger Hunts
+- Scooter Tours
+- Screen Printing/T-Shirt Printing
+- Security Systems
+- Self Storage
+- Septic Services
+- Service Stations
+- Session Photography
+- Shared Office Spaces
+- Shipping Centers
+- Shoe Repair
+- Shoe Stores
+- Shopping
+- Shopping Centers
+- Shredding Services
+- Signmaking
+- Skate Parks
+- Skate Shops
+- Skating Rinks
+- Skin Care
+- Smog Check Stations
+- Snow Removal
+- Soccer
+- Solar Installation
+- Souvenir Shops
+- Speakeasies
+- Special Education
+- Specialty Schools
+- Spiritual Shop
+- Sporting Goods
+- Sports Clubs
+- Sports Medicine
+- Sports Wear
+- Spray Tanning
+- Stadiums & Arenas
+- Street Vendors
+- Summer Camps
+- Supernatural Readings
+- Surf Shop
+- Swimming Lessons/Schools
+- Swimwear
+- Tableware
+- Tanning
+- Tanning Beds
+- Tattoo
+- Tax Services
+- Taxidermy
+- Taxis
+- Tennis
+- Threading Services
+- Thrift Stores
+- Tiling
+- Tires
+- Tobacco Shops
+- Towing
+- Toy Stores
+- Traditional Chinese Medicine
+- Traditional Clothing
+- Trailer Repair
+- Train Stations
+- Trainers
+- Trains
+- Transmission Repair
+- Transportation
+- Travel Agents
+- Travel Services
+- Tree Services
+- Trivia Hosts
+- Truck Rental
+- Tutoring Centers
+- University Housing
+- Unofficial Yelp Events
+- Urgent Care
+- Urologists
+- Used
+- Used Bookstore
+- Used Car Dealers
+- Vacation Rentals
+- Vape Shops
+- Venues & Event Spaces
+- Video Game Stores
+- Videos & Video Game Rental
+- Vinyl Records
+- Virtual Reality Centers
+- Vocational & Technical School
+- Walk-in Clinics
+- Walking Tours
+- Watches
+- Water Heater Installation/Repair
+- Water Purification Services
+- Water Stores
+- Waxing
+- Web Design
+- Wedding Chapels
+- Wedding Planning
+- Weight Loss Centers
+- Well Drilling
+- Wheel & Rim Repair
+- Wholesale Stores
+- Wholesalers
+- Wigs
+- Wildlife Control
+- Windshield Installation & Repair
+- Women's Clothing
+- Yelp Events
+- Yoga
+- Zoos
