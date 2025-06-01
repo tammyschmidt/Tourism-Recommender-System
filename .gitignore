@@ -173,5 +173,7 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-backend/data/yelp_academic_dataset_business.json
+backend/data/*.json
+backend/data/*.csv
+backend/data/category_analysis.txt
 
