@@ -1,0 +1,289 @@
+Total number of included categories: 286
+
+Included categories:
+- Acai Bowls
+- Afghan
+- African
+- American (New)
+- American (Traditional)
+- Arabic
+- Argentine
+- Armenian
+- Asian Fusion
+- Australian
+- Austrian
+- Bagels
+- Bakeries
+- Bangladeshi
+- Barbeque
+- Bars
+- Basque
+- Beach Bars
+- Beaches
+- Bed & Breakfast
+- Beer
+- Beer Bar
+- Beer Gardens
+- Beer Hall
+- Beer Tours
+- Belgian
+- Bistros
+- Brasseries
+- Brazilian
+- Breakfast & Brunch
+- Breweries
+- Brewpubs
+- British
+- Bubble Tea
+- Buffets
+- Burgers
+- Burmese
+- Butcher
+- Cafes
+- Cajun/Creole
+- Calabrian
+- Cambodian
+- Canadian (New)
+- Candy Stores
+- Cantonese
+- Caribbean
+- Caterers
+- Champagne Bars
+- Cheese Shops
+- Cheese Tasting Classes
+- Cheesesteaks
+- Chicken Shop
+- Chicken Wings
+- Chinese
+- Chocolatiers & Shops
+- Cideries
+- Cigar Bars
+- Cocktail Bars
+- Coffee & Tea
+- Coffee & Tea Supplies
+- Coffee Roasteries
+- Coffeeshops
+- Colombian
+- Comedy Clubs
+- Comfort Food
+- Conveyor Belt Sushi
+- Cooking Classes
+- Cooking Schools
+- Creperies
+- Cuban
+- Cucina campana
+- Cupcakes
+- Czech
+- DJs
+- Delis
+- Desserts
+- Dietitians
+- Dim Sum
+- Diners
+- Dinner Theater
+- Distilleries
+- Dive Bars
+- Dominican
+- Donuts
+- Dumplings
+- Eastern European
+- Eatertainment
+- Egyptian
+- Empanadas
+- Ethiopian
+- Ethnic Food
+- Ethnic Grocery
+- Falafel
+- Farmers Market
+- Fast Food
+- Filipino
+- Fish & Chips
+- Fondue
+- Food
+- Food Banks
+- Food Court
+- Food Delivery Services
+- Food Stands
+- Food Tours
+- Food Trucks
+- French
+- Fruits & Veggies
+- Fuzhou
+- Gastropubs
+- Gelato
+- Georgian
+- German
+- Gluten-Free
+- Greek
+- Grocery
+- Guamanian
+- Haitian
+- Hakka
+- Halal
+- Hawaiian
+- Himalayan/Nepalese
+- Honduran
+- Honey
+- Hong Kong Style Cafe
+- Hookah Bars
+- Hot Dogs
+- Hotel bar
+- Hotels
+- Hotels & Travel
+- Hungarian
+- Iberian
+- Ice Cream & Frozen Yogurt
+- Indian
+- Indonesian
+- International
+- International Grocery
+- Internet Cafes
+- Irish
+- Irish Pub
+- Israeli
+- Italian
+- Izakaya
+- Japanese
+- Japanese Curry
+- Jazz & Blues
+- Juice Bars & Smoothies
+- Karaoke
+- Kebab
+- Korean
+- Kosher
+- Lahmacun
+- Laotian
+- Latin American
+- Lebanese
+- Limos
+- Live/Raw Food
+- Local Flavor
+- Local Services
+- Lounges
+- Macarons
+- Malaysian
+- Meat Shops
+- Mediterranean
+- Mexican
+- Middle Eastern
+- Mongolian
+- Moroccan
+- Musicians
+- New Mexican Cuisine
+- Nicaraguan
+- Nightlife
+- Noodles
+- Olive Oil
+- Oriental
+- Pakistani
+- Pan Asian
+- Pancakes
+- Parent Cafes
+- Parking
+- Parks
+- Party & Event Planning
+- Pasta Shops
+- Patisserie/Cake Shop
+- Performing Arts
+- Persian/Iranian
+- Personal Chefs
+- Peruvian
+- Pets
+- Piano Bars
+- Pita
+- Pizza
+- Playgrounds
+- Poke
+- Polish
+- Pool & Billiards
+- Pool Halls
+- Pop-Up Restaurants
+- Portuguese
+- Pretzels
+- Public Art
+- Pubs
+- Puerto Rican
+- Ramen
+- Resorts
+- Rest Stops
+- Restaurants
+- Roman
+- Russian
+- Salad
+- Salvadoran
+- Sandwiches
+- Sardinian
+- Saunas
+- Scandinavian
+- Scottish
+- Seafood
+- Seafood Markets
+- Senegalese
+- Serbo Croatian
+- Shanghainese
+- Shaved Ice
+- Shaved Snow
+- Sicilian
+- Singaporean
+- Ski Resorts
+- Smokehouse
+- Social Clubs
+- Somali
+- Soul Food
+- Soup
+- South African
+- Southern
+- Spanish
+- Specialty Food
+- Sports Bars
+- Sports Betting
+- Sri Lankan
+- Steakhouses
+- Strip Clubs
+- Supper Clubs
+- Sushi Bars
+- Swimming Pools
+- Syrian
+- Szechuan
+- TV Mounting
+- Tabletop Games
+- Tacos
+- Taiwanese
+- Tapas Bars
+- Tapas/Small Plates
+- Tasting Classes
+- Tea Rooms
+- Team Building Activities
+- Teppanyaki
+- Tex-Mex
+- Thai
+- Themed Cafes
+- Ticket Sales
+- Tiki Bars
+- Tonkatsu
+- Tours
+- Trampoline Parks
+- Trinidadian
+- Turkish
+- Tuscan
+- Ukrainian
+- Utilities
+- Uzbek
+- Vegan
+- Vegetarian
+- Venezuelan
+- Veterinarians
+- Vietnamese
+- Vintage & Consignment
+- Visitor Centers
+- Vitamins & Supplements
+- Waffles
+- Water Delivery
+- Whiskey Bars
+- Wine & Spirits
+- Wine Bars
+- Wine Tasting Classes
+- Wine Tasting Room
+- Wine Tours
+- Wineries
+- Wraps
