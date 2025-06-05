@@ -1,0 +1,525 @@
+Parent;Child
+African;Northern African
+Northern African;Egyptian
+Northern African;Moroccan
+African;Sub-Saharan African
+Sub-Saharan African;Eritrean
+Sub-Saharan African;Ethiopian
+Sub-Saharan African;Somali
+Sub-Saharan African;South African
+Sub-Saharan African;Senegalese
+Asian;Pan Asian
+Pan Asian;Hong Kong Style Cafe
+Pan Asian;Asian Fusion
+Pan Asian;Noodles
+Pan Asian;Hot Pot
+Pan Asian;Rice
+Pan Asian;Wok
+Asian;East Asian
+East Asian;Chinese
+Chinese;Congee
+Chinese;Dim Sum
+Chinese;Cantonese
+Chinese;Fuzhou
+Chinese;Hainan
+Chinese;Hakka
+Chinese;Henghwa
+Chinese;Hokkien
+Chinese;Hunan
+Chinese;Pekinese
+Chinese;Shanghainese
+Chinese;Szechuan
+Chinese;Teochew
+East Asian;Japanese
+Japanese;Conveyor Belt Sushi
+Japanese;Izakaya
+Japanese;Japanese Curry
+Japanese;Kaiseki
+Japanese;Okinawan
+Japanese;Robatayaki
+Japanese;Teppanyaki
+Japanese;Western Style Japanese Food (Yōshoku)
+Japanese;Yakiniku
+Japanese;Yakitori
+Japanese;Blowfish (Fugu)
+Japanese;Donburi
+Japanese;Gyudon
+Japanese;Oyakodon
+Japanese;Hand Rolls
+Japanese;Horumon
+Japanese;Okonomiyaki
+Japanese;Onigiri
+Japanese;Ramen
+Japanese;Soba
+Japanese;Sukiyaki
+Japanese;Takoyaki
+Japanese;Tempura
+Japanese;Tonkatsu
+Japanese;Udon
+Japanese;Unagi
+Japanese;Kushikatsu
+Japanese;Oden
+Japanese;Nikkei
+Japanese;Bento
+Japanese;Sushi Bars
+Japanese;Japanese Sweets
+East Asian;Korean
+East Asian;Mongolian
+East Asian;Taiwanese
+Taiwanese;Bubble Tea
+Taiwanese;Shaved Ice
+Taiwanese;Shaved Snow
+Asian;Southeast Asian
+Southeast Asian;Thai
+Thai;Kopitiam
+Southeast Asian;Vietnamese
+Southeast Asian;Indonesian
+Indonesian;Hawker Centre
+Indonesian;Kopitiam
+Southeast Asian;Filipino
+Southeast Asian;Burmese
+Southeast Asian;Cambodian
+Southeast Asian;Malaysian
+Malaysian;Mamak
+Malaysian;Nyonya
+Malaysian;Hawker Centre
+Malaysian;Kopitiam
+Malaysian;Nasi Lemak
+Southeast Asian;Laos
+Laos;Laotian
+Southeast Asian;Singaporean
+Singaporean;Hawker Centre
+Singaporean;Kopitiam
+Asian;South Asian
+South Asian;Indian
+South Asian;Pakistani
+South Asian;Bangladeshi
+South Asian;Sri Lankan
+South Asian;Himalayan/Nepalese
+South Asian;Afghan
+Asian;Central Asian
+Central Asian;Afghan
+Central Asian;Kazakhstan
+Central Asian;Uzbek
+Asian;Middle Eastern
+Middle Eastern;Turkish
+Turkish;Kebab
+Turkish;Pita
+Turkish;Torshi
+Turkish;Chee Kufta
+Turkish;Gozleme
+Turkish;Lahmacun
+Turkish;Ottoman Cuisine
+Turkish;Turkish Ravioli
+Middle Eastern;Israeli
+Israeli;Jewish
+Jewish;Kosher
+Middle Eastern;Egyptian
+Middle Eastern;Lebanese
+Middle Eastern;Syrian
+Middle Eastern;Armenian
+Middle Eastern;Georgian
+Middle Eastern;Kurdish
+Middle Eastern;Persian/Iranian
+European;Modern European
+European;Western Europe
+Western Europe;French
+French;Baguettes
+French;Fondue
+French;Creperies
+French;Macarons
+French;Alsatian
+French;Auvergnat
+French;Berrichon
+French;Bourguignon
+French;Mauritius
+French;Nicoise
+French;Provencal
+French;Reunion
+French;French Southwest
+French;Lyonnais
+French;Basque
+Western Europe;German
+German;Schnitzel
+German;Curry Sausage
+German;Baden
+German;Bavarian
+Bavarian;Beer Garden
+Bavarian;Beer Hall
+Bavarian;Beisl
+Bavarian;Pretzels
+German;Eastern German
+German;Franconian
+German;Hessian
+German;Northern German
+Northern German;Fischbroetchen
+German;Palatine
+German;Rhinelandian
+German;Swabian
+Western Europe;Belgian
+Belgian;Flemish
+Western Europe;Austrian
+Austrian;Beisl
+Austrian;Schnitzel
+Western Europe;Swiss Food
+Swiss Food;Fondue
+Swiss Food;Heuriger
+European;Northern European
+Northern European;British
+British;Fish & Chips
+British;Poutineries
+Northern European;Irish
+Northern European;Scottish
+Northern European;Swedish
+Swedish;Traditional Swedish
+Northern European;Traditional Norwegian
+Northern European;Danish
+European;Southern European
+Southern European;Italian
+Italian;Norcinerie
+Italian;Parma
+Italian;Tavola Calda
+Italian;Trattorie
+Italian;Salumerie
+Italian;Panzerotti
+Italian;Piadina
+Italian;Pizza
+Italian;Abruzzese
+Italian;Altoatesine
+Italian;Apulian
+Italian;Calabrian
+Italian;Cucina Campana
+Italian;Emilian
+Italian;Friulan
+Italian;Ligurian
+Italian;Lumbard
+Italian;Napoletana
+Italian;Piemonte
+Italian;Roman
+Italian;Sardinian
+Italian;Sicilian
+Italian;Tuscan
+Italian;Venetian
+Southern European;Spanish
+Spanish;Freiduria
+Spanish;Arroceria/Paella
+Spanish;Tabernas
+Spanish;Tapas Bars
+Spanish;Churros
+Spanish;Empanadas
+Spanish;Andalusian
+Spanish;Asturian
+Spanish;Basque
+Spanish;Catalan
+Spanish;Galician
+Southern European;Portuguese
+Portuguese;Churros
+Portuguese;Alentejo
+Portuguese;Algarve
+Portuguese;Azores
+Portuguese;Beira
+Portuguese;Fado Houses
+Portuguese;Madeira
+Portuguese;Minho
+Portuguese;Ribatejo
+Portuguese;Tras-os-Montes
+Southern European;Greek
+Greek;Tabernas
+Greek;Pita
+Southern European;Cypriot
+Southern European;Corsican
+European;Eastern European
+Eastern European;Polish
+Polish;Pierogis
+Polish;Zapiekanka
+Eastern European;Russian
+Eastern European;Hungarian
+Hungarian;Chimney Cakes
+Eastern European;Ukrainian
+Eastern European;Bulgarian
+Eastern European;Czech/Slovakian
+Eastern European;Czech
+Eastern European;Georgian
+Eastern European;Romanian
+Eastern European;Serbo Croatian
+Serbo Croatian;Yugoslav
+Eastern European;Slovakian
+North American;Northern American
+Northern American;United States
+United States;American (New)
+United States;American (Traditional)
+United States;Pancakes
+United States;Barbeque
+United States;Burgers
+United States;Chicken Wings
+United States;Diners
+United States;Soul Food
+Northern American;Canadian (New)
+Canadian (New);Poutineries
+Canadian (New);Donairs
+Northern American;Puerto Rican
+Northern American;Hawaiian
+Hawaiian;Poke
+Northern American;Mexican
+Mexican;Eastern Mexican
+Mexican;Jaliscan
+Mexican;Northern Mexican
+Mexican;Oaxacan
+Mexican;Pueblan
+Mexican;Tacos
+Mexican;Tortillas
+Mexican;Tamales
+Mexican;Yucatan
+Mexican;New Mexican Cuisine
+North American;Central American
+Central American;Honduran
+Central American;Nicaraguan
+Central American;Salvadoran
+North American;Caribbean
+Caribbean;Cuban
+Caribbean;Dominican
+Caribbean;Haitian
+Caribbean;Puerto Rican
+Caribbean;Trinidadian
+South American;Andean States
+Andean States;Colombian
+Andean States;Venezuelan
+Andean States;Peruvian
+Peruvian;Nikkei
+South American;Southern Cone
+Southern Cone;Argentine
+Argentine;Barbeque
+Southern Cone;Chilean
+South American;Brazilian
+Brazilian;Barbeque
+Brazilian;Brazilian Empanadas
+Brazilian;Central Brazilian
+Brazilian;Northeastern Brazilian
+Brazilian;Northern Brazilian
+Brazilian;Rodizios
+Oceanian;Modern Australian
+Oceanian;New Zealand
+Oceanian;Guamanian
+Oceanian;Hawaiian
+Oceanian;Polynesian
+Arabian;Arab Pizza
+Arabian;Pita
+Arabian;Egyptian
+Arabian;Lebanese
+Arabian;Moroccan
+Arabian;Somali
+Arabian;Syrian
+Mediterranean;Falafel
+Mediterranean;Spanish
+Mediterranean;French
+Mediterranean;Italian
+Mediterranean;Serbo Croatian
+Mediterranean;Greek
+Mediterranean;Cypriot
+Mediterranean;Turkish
+Mediterranean;Syrian
+Mediterranean;Lebanese
+Mediterranean;Israelian
+Mediterranean;Egyptian
+Mediterranean;Lybian
+Mediterranean;Moroccan
+Mediterranean;Corsican
+Black Sea;Bulgarian
+Black Sea;Georgian
+Black Sea;Romanian
+Black Sea;Russian
+Black Sea;Turkish
+Black Sea;Ukrainian
+Cajun/Creole;Haitian
+Cajun/Creole;Dominican
+Cajun/Creole;Trinidadian
+Iberian;Spanish
+Iberian;Portuguese
+Iberian;French
+Scandinavian;Swedish
+Scandinavian;Traditional Norwegian
+Scandinavian;Danish
+Oriental;Chinese
+Oriental;Japanese
+Oriental;Korean
+Oriental;Thai
+Oriental;Vietnamese
+Oriental;Malaysian
+Oriental;Rice
+Oriental;Noodles
+Mexican;Tex-Mex
+American (New);Tex-Mex
+Latin American;Empanadas
+Latin American;Southern
+Southern;American (Traditional)
+Latin American;Caribbean
+Latin American;Mexican
+Latin American;South American
+Latin American;Comfort Food
+Latin American;Soul Food
+Breakfast & Brunch;Baguettes
+Breakfast & Brunch;Pancakes
+Breakfast & Brunch;Delis
+Breakfast & Brunch;Acai Bowls
+Breakfast & Brunch;Backshop
+Breakfast & Brunch;Bagels
+Breakfast & Brunch;Bakeries
+Breakfast & Brunch;Pretzels
+Lunch & Snacks;Baguettes
+Lunch & Snacks;Bistros
+Lunch & Snacks;Cafeteria
+Lunch & Snacks;Canteen
+Lunch & Snacks;Diners
+Lunch & Snacks;Hong Kong Style Cafe
+Lunch & Snacks;Open Sandwiches
+Lunch & Snacks;Salad
+Lunch & Snacks;Sandwiches
+Lunch & Snacks;Tapas Bars
+Lunch & Snacks;Take-Away
+Lunch & Snacks;Tavola Calda
+Lunch & Snacks;Wraps
+Lunch & Snacks;Bento
+Lunch & Snacks;Pretzels
+Lunch & Snacks;Delicatessen
+Lunch & Snacks;Donairs
+Lunch & Snacks;Empanadas
+Lunch & Snacks;Panzerotti
+Lunch & Snacks;Piadina
+Lunch & Snacks;Poke
+Lunch & Snacks;Soup
+Lunch & Snacks;Zapiekanka
+Sweets;Creperies
+Sweets;Milk Bars
+Sweets;Waffles
+Sweets;Chimney Cakes
+Sweets;Churros
+Sweets;Cupcakes
+Sweets;Custom Cakes
+Sweets;Desserts
+Sweets;Donuts
+Sweets;Gelato
+Sweets;Ice Cream & Frozen Yogurt
+Sweets;Honey
+Sweets;Japanese Sweets
+Japanese Sweets;Taiyaki
+Japanese Sweets;Dagashi
+Sweets;Milkshake Bars
+Sweets;Patisserie/Cake Shop
+Sweets;Shaved Ice
+Sweets;Shaved Snow
+Sweets;Candy Stores
+Sweets;Chocolatiers & Shops
+Sweets;Dried Fruit
+Sweets;Macarons
+Sweets;Popcorn Shops
+Casual Dinner;Diners
+Casual Dinner;Night Food
+Casual Dinner;Pub Food
+Casual Dinner;Tapas Bars
+Tapas Bars;Tapas/Small Plates
+Casual Dinner;Tavola Calda
+Casual Dinner;Trattorie
+Fine Dining;Dinner Theater
+Fine Dining;Signature Cuisine
+Fine Dining;Steakhouses
+Fine Dining;Supper Clubs
+Fine Dining;Sushi Bars
+Fine Dining;Delicatessen
+Fine Dining;Fondue
+Fine Dining;Hot Pot
+Fast Food;Rolls
+Rolls;Kebab
+Rolls;Falafel
+Rolls;Tacos
+Rolls;Gozleme
+Rolls;Lahmacun
+Rolls;Wraps
+Rolls;Donairs
+Rolls;Piadina
+Rolls;Tortillas
+Fast Food;Chee Kufta
+Fast Food;Noodles
+Fast Food;Pizza
+Fast Food;Poutineries
+Fast Food;Burgers
+Fast Food;Cheesesteaks
+Fast Food;Chicken Wings
+Fast Food;Curry Sausage
+Fast Food;Hot Dogs
+Fast Food;Rotisserie Chicken
+Fast Food;Friterie
+Coffee & Tea;Kopitiam
+Coffee & Tea;Cafes
+Coffee & Tea;Themed Cafes
+Coffee & Tea;Cafeteria
+Coffee & Tea;Coffee & Tea Supplies
+Coffee & Tea;Coffee Roasteries
+Coffee & Tea;Internet Cafes
+Coffee & Tea;Parent Cafes
+Coffee & Tea;Tea Rooms
+Alcoholic Beverages;Beer Garden
+Alcoholic Beverages;Beer Hall
+Alcoholic Beverages;Brasseries
+Alcoholic Beverages;Gastropubs
+Alcoholic Beverages;Island Pub
+Alcoholic Beverages;Tabernas
+Alcoholic Beverages;Tapas Bars
+Alcoholic Beverages;Beer, Wine & Spirits
+Alcoholic Beverages;Beverage Store
+Alcoholic Beverages;Breweries
+Alcoholic Beverages;Brewpubs
+Alcoholic Beverages;Cideries
+Alcoholic Beverages;Distilleries
+Alcoholic Beverages;Wineries
+Alcoholic Beverages;Meaderies
+Alcoholic Beverages;Mulled Wine
+Soft Drinks;Milk Bars
+Soft Drinks;Bubble Tea
+Soft Drinks;Water Stores
+Soft Drinks;Juice Bars & Smoothies
+Soft Drinks;Kombucha
+Soft Drinks;Milkshake Bars
+Take-Away;Delis
+Take-Away;Convenience Stores
+Take-Away;Fast Food
+Take-Away;Food Court
+Take-Away;Food Stands
+Take-Away;Food Delivery Services
+Take-Away;Food Trucks
+Take-Away;Hawker Centre
+Take-Away;Street Vendors
+Take-Away;Kiosk
+Markets & Groceries;Farmers Market
+Markets & Groceries;Ethical Grocery
+Markets & Groceries;Grocery
+Markets & Groceries;Imported Food
+Markets & Groceries;International Grocery
+Markets & Groceries;Organic Stores
+Markets & Groceries;Specialty Food
+Markets & Groceries;Cheese Shops
+Markets & Groceries;Convenience Stores
+Markets & Groceries;Seafood Shops
+Seafood Shops;Fishmonger
+Seafood Shops;Seafood Markets
+Markets & Groceries;Dried Fruit
+Markets & Groceries;Frozen Food
+Markets & Groceries;Fruits & Veggies
+Markets & Groceries;Health Markets
+Markets & Groceries;Herbs & Spices
+Markets & Groceries;Meat Shops
+Meat Shops;Norcinerie
+Meat Shops;Live/Raw Food
+Meat Shops;Butcher
+Meat Shops;Chicken Shop
+Meat Shops;Game Meat
+Meat Shops;Rotisserie Chicken
+Meat Shops;Salumerie
+Meat Shops;Smokehouse
+Markets & Groceries;Olive Oil
+Markets & Groceries;Pasta Shops
+Markets & Groceries;Tofu Shops
+Markets & Groceries;Sugar Shacks
+Markets & Groceries;Water Stores
+Flatbread;Pita
+Flatbread;Lahmacun
+Flatbread;Arab Pizza
