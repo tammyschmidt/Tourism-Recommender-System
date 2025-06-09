@@ -10,7 +10,7 @@
 // ==============================
 
 //  Get the input restaurant, its city and its cuisines
-MATCH (input:Restaurant {id: $restaurant_id})-[:SERVES_CUISINE]->(inputCuisine:Cuisine)
+MATCH (input:Restaurant {id: $restaurant_id})-[:HAS_CATEGORY]->(inputCuisine:Category)
 MATCH (input)-[:LOCATED_IN]->(city:City)
 
 // Find other restaurants in the same city (excluding the input)
@@ -18,7 +18,7 @@ MATCH (other:Restaurant)-[:LOCATED_IN]->(city)
 WHERE other.id <> $restaurant_id
 
 // Match the cuisines of other restaurants
-MATCH (other)-[:SERVES_CUISINE]->(otherCuisine:Cuisine)
+MATCH (other)-[:HAS_CATEGORY]->(otherCuisine:Category)
 
 // Find shortest path in cuisine hierarchy
 MATCH path = shortestPath((inputCuisine)-[:SUBCATEGORY_OF*..5]-(otherCuisine)) // max. legth 5

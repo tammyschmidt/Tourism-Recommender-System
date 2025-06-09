@@ -1,34 +1,32 @@
 // ==============================
-// Find restaurants nearby to a given location and one given input cuisine (extend to several eventually)
+// Find restaurants nearby to a given location and one given input category (extend to several eventually)
 // using k-neirest neighbors 
 // based on Haversine using longitude/latitude 
 // Filters:
-// => Only consider restaurants of the given cuisine, their parent node, or direct siblings
+// => Only consider restaurants of the given categories, their parent nodes, or direct siblings
 // => For now, NO prioritization by high rating and review count
-// Input: latitude, longitude, cuisine, top_n
+// Input: latitude, longitude, categories, top_n
 // Output: list of top_n recommended restaurants
 // ==============================
 
 WITH $latitude AS inputLat, 
      $longitude AS inputLon, 
-     $cuisine AS inputCuisineName, 
+     $categories AS inputCategoryNames;
 
-// Get input cuisine, its parent, and its siblings
-MATCH (inputCuisine:Cuisine {name: inputCuisineName})
-OPTIONAL MATCH (inputCuisine)-[:SUBCATEGORY_OF]->(parent:Cuisine)
-OPTIONAL MATCH (parent)<-[:SUBCATEGORY_OF]-(sibling:Cuisine)
+// Get input categories, their parents, and their siblings
+UNWIND inputCategoryNames AS catName
+MATCH (inputCategory:Category {name: catName})
+OPTIONAL MATCH (inputCategory)-[:SUBCATEGORY_OF]->(parent:Category)
+OPTIONAL MATCH (parent)<-[:SUBCATEGORY_OF]-(sibling:Category)
+
 WITH 
-  inputCuisine, 
-  parent, 
-  COLLECT(DISTINCT sibling.name) + inputCuisine.name + 
-    CASE WHEN parent IS NOT NULL THEN [parent.name] ELSE [] END AS allowedCuisines,
-  inputLat, 
-  inputLon, 
-  top_n
+  COLLECT(DISTINCT inputCategory.name) AS inputCats,
+  COLLECT(DISTINCT sibling.name) AS siblingCats,
+  COLLECT(DISTINCT parent.name) AS parentCats,
+  inputLat, inputLon, top_n
 
-// Match restaurants that serve any allowed cuisine
-MATCH (restaurant:Restaurant)-[:SERVES_CUISINE]->(cuisine:Cuisine)
-WHERE cuisine.name IN allowedCuisines
+WITH apoc.coll.toSet(inputCats + siblingCats + parentCats) AS allowedCategories,
+     inputLat, inputLon, top_n
 
 // Calculate geographic distance (Haversine)
 WITH 

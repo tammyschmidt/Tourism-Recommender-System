@@ -25,4 +25,13 @@ CALL {
   UNWIND categoryNames AS categoryName
     MERGE (cat:Category {name: trim(categoryName)})
     MERGE (r)-[:HAS_CATEGORY]->(cat)
+
+
+LOAD CSV WITH HEADERS FROM 'file:///categories_hierarchy.csv' AS row
+FIELDTERMINATOR ';'
+
+MERGE (parent:Category {name: row.Parent})
+MERGE (child:Category {name: row.Child})
+MERGE (child)-[:SUBCATEGORY_OF]->(parent)
+  
 }
