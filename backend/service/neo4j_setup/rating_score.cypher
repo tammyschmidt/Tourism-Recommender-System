@@ -15,7 +15,7 @@ WITH r,
 WITH r,
      R,
      CASE WHEN v < 50 THEN -1.0 + (log10(v + 1) / log10(51)) // trust at 50 reviews
-     ELSE 0 END AS penalty
+     ELSE 0 END AS penaltygit merge
 
 WITH r,
      R + penalty as score
