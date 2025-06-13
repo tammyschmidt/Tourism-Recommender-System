@@ -47,7 +47,7 @@ if __name__ == "__main__":
     parser.add_argument("--top_n", type=int, default=5)
 
     # Optional inputs depending on strategy
-    parser.add_argument("--restaurant_id", help="Restaurant ID for category-based strategies")
+    parser.add_argument("--restaurant_id", default="MTSW4McQd7CbVtyjqoe9mw", help="Restaurant ID for category-based strategies")
     parser.add_argument("--latitude", type=float, help="Latitude for location-based strategies")
     parser.add_argument("--longitude", type=float, help="Longitude for location-based strategies")
     parser.add_argument("--categories", nargs="+", help="Category name(s) for location-based strategies")
