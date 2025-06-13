@@ -9,10 +9,15 @@
 // Output: list of top_n recommended restaurants
 // ==============================
 
+// :param latitude => 39.9555052;
+// :param longitude => -75.1555641;
+// :param categories => ["Italian"];
+// :param top_n => 5;
+
 WITH $latitude AS inputLat, 
      $longitude AS inputLon, 
-     $categories AS inputCategoryNames;
-
+     $categories AS inputCategoryNames
+     
 // Get input categories, their parents, and their siblings
 UNWIND inputCategoryNames AS catName
 MATCH (inputCategory:Category {name: catName})
@@ -23,30 +28,31 @@ WITH
   COLLECT(DISTINCT inputCategory.name) AS inputCats,
   COLLECT(DISTINCT sibling.name) AS siblingCats,
   COLLECT(DISTINCT parent.name) AS parentCats,
-  inputLat, inputLon, top_n
+  inputLat, inputLon
 
 WITH apoc.coll.toSet(inputCats + siblingCats + parentCats) AS allowedCategories,
-     inputLat, inputLon, top_n
+     inputLat, inputLon
+
+// Match restaurants that belong to allowed categories
+MATCH (restaurant:Restaurant)-[:HAS_CATEGORY]->(category:Category)
+WHERE category.name IN allowedCategories
 
 // Calculate geographic distance (Haversine)
 WITH 
   restaurant,
-  inputLat, inputLon,
-  restaurant.latitude AS lat2,
-  restaurant.longitude AS lon2,
   6371 * 2 * 
-    apoc.math.asin(
-      apoc.math.sqrt(
-        apoc.math.pow(sin(radians((lat2 - inputLat)/2)), 2) +
-        cos(radians(inputLat)) * cos(radians(lat2)) *
-        apoc.math.pow(sin(radians((lon2 - inputLon)/2)), 2)
+    asin(
+      sqrt(
+        (sin(radians((restaurant.latitude - inputLat) / 2))) ^ 2 +
+        cos(radians(inputLat)) * cos(radians(restaurant.latitude)) *
+        (sin(radians((restaurant.longitude - inputLon) / 2))) ^ 2
       )
     ) AS distance
-
+    
 // Return nearest N
 RETURN 
   restaurant.id AS restaurant_id,
   restaurant.name AS restaurant_name,
   distance
 ORDER BY distance ASC
-LIMIT top_n
+LIMIT $top_n
