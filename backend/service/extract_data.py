@@ -84,16 +84,18 @@ def get_price(attr):
         return attr.get('RestaurantsPriceRange2')
     return None
 
-restaurants_df['price_range'] = restaurants_df['attributes'].apply(get_price)
+# Create a copy of the DataFrame to avoid the SettingWithCopyWarning
+restaurants_df = restaurants_df.copy()
+restaurants_df.loc[:, 'price_range'] = restaurants_df['attributes'].apply(get_price)
 
 # Create restaurants dataframe
-restaurants_final = restaurants_df[['business_id', 'name', 'city', 'latitude', 'longitude', 'price_range', 'stars', 'review_count', 'categories']]
-restaurants_final.columns = ['restaurant_id', 'name', 'city', 'latitude', 'longitude', 'price_range', 'rating', 'review_count', 'categories']
+restaurants_final = restaurants_df[['business_id', 'name', 'city', 'latitude', 'longitude', 'price_range', 'stars', 'review_count', 'categories', 'attributes']].copy()
+restaurants_final.columns = ['restaurant_id', 'name', 'city', 'latitude', 'longitude', 'price_range', 'rating', 'review_count', 'categories', 'attributes']
 
 # price_range is missing, convert to 0
-restaurants_final['price_range'] = pd.to_numeric(restaurants_final['price_range'], errors='coerce').fillna(0).astype(int)
+restaurants_final.loc[:, 'price_range'] = pd.to_numeric(restaurants_final['price_range'], errors='coerce').fillna(0).astype(int)
 # Convert categories to list
-restaurants_final['category_list'] = restaurants_final['categories'].apply(lambda x: [cat.strip() for cat in x.split(',')] if pd.notnull(x) else [])
+restaurants_final.loc[:, 'category_list'] = restaurants_final['categories'].apply(lambda x: [cat.strip() for cat in x.split(',')] if pd.notnull(x) else [])
 restaurants_final.drop(columns=['categories'], inplace=True)
 
 # Analyze categories
