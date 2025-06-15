@@ -1,4 +1,4 @@
-import { RestaurantFinder } from "./components/RestaurantFinder"
+import RestaurantFinder from "./app/page"
 
 function App() {
   return (
