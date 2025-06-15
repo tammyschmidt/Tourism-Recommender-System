@@ -1,6 +1,6 @@
 from neomodel import StructuredNode, StringProperty, IntegerProperty, FloatProperty, UniqueIdProperty, RelationshipTo
 from .location import City, Country
-from .cuisine import Cuisine
+from .category import Category
 
 class Restaurant(StructuredNode):
     uid = UniqueIdProperty() # unique id for neo4j
@@ -15,7 +15,8 @@ class Restaurant(StructuredNode):
     # relationship
     city = RelationshipTo("City", 'LOCATED_IN_CITY')
     country = RelationshipTo("Country", 'LOCATED_IN_COUNTRY')
-    cuisines = RelationshipTo("Cuisine", 'SERVES_CUISINE')
+    categories = RelationshipTo("Category", 'HAS_CATEGORY')
+    reviews = RelationshipTo("Review", "HAS_REVIEW")
 
     def __str__(self):
         return self.name
