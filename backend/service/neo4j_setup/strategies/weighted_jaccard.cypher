@@ -1,9 +1,20 @@
-// WITH ["Italian"] AS inputCategories
+// ==============================
+// Find restaurants similar to a given category 
+// using weighted Jaccard similarity index
+// based on an extended list of allowed input categories using the graph hierarchy
+// Weights: {Self: 1, Descendants: 1, Parent: 0.5, Sibling: 0.3}
+// Input: inputCategories, top_n
+// Output: list of top_n recommended restaurants
+// ==============================
+
+// :param inputCategories => ["Italian"];
+// :param top_n => 5;
+
 
 WITH $inputCategories AS inputCategories,
      $top_n AS top_n
 
-// === STEP 1: Get extended set of input categories with weights ===
+// STEP 1: Get extended set of input categories with weights
 // Self (weight: 1)
 UNWIND inputCategories AS cat
 MATCH (c:Category {name: cat})
@@ -33,11 +44,11 @@ UNWIND all_entries AS entry
 WITH entry.name AS cat, max(entry.weight) AS weight
 WITH collect({name: cat, weight: weight}) AS query_weights
 
-// === STEP 2: Fetch restaurants and their categories ===
+// STEP 2: Fetch restaurants and their categories
 MATCH (r:Restaurant)-[:HAS_CATEGORY]->(c:Category)
 WITH r.name AS restaurant, collect(DISTINCT c.name) AS r_cats, query_weights
 
-// === STEP 3: Compute weighted Jaccard score ===
+// STEP 3: Compute weighted Jaccard score
 // Jaccard index : intersection / union
 CALL {
   WITH r_cats, query_weights

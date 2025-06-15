@@ -6,3 +6,9 @@ FOR (c:City) REQUIRE c.name IS UNIQUE;
 
 CREATE CONSTRAINT constraint_category_name IF NOT EXISTS
 FOR (cat:Category) REQUIRE cat.name IS UNIQUE;
+
+CREATE CONSTRAINT constraint_user_id IF NOT EXISTS
+FOR (u:User) REQUIRE u.id IS UNIQUE;
+
+CREATE CONSTRAINT constraint_review_id IF NOT EXISTS
+FOR (rev:Review) REQUIRE rev.is IS UNIQUE;

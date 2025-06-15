@@ -16,6 +16,7 @@ MATCH (input:Restaurant {id: $restaurant_id})-[:LOCATED_IN]->(city:City)
 CALL {
   // Get the categories of the input restaurant
   MATCH (input:Restaurant {id: $restaurant_id})-[:HAS_CATEGORY]->(inputCategory:Category)
+  WHERE NOT inputCategory.name IN ["Restaurants", "Food"]
 
   // Find other restaurants in the same city (excluding the input)
   MATCH (input)-[:LOCATED_IN]->(city:City)
