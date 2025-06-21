@@ -11,4 +11,4 @@ CREATE CONSTRAINT constraint_user_id IF NOT EXISTS
 FOR (u:User) REQUIRE u.id IS UNIQUE;
 
 CREATE CONSTRAINT constraint_review_id IF NOT EXISTS
-FOR (rev:Review) REQUIRE rev.is IS UNIQUE;
+FOR (rev:Review) REQUIRE rev.id IS UNIQUE;

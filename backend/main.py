@@ -5,6 +5,7 @@ import os
 import sys
 from service.content_based_recommender import ContentBasedRecommender
 from service.collaborative_filtering import CollaborativeFiltering
+from utils.neo4j_driver import get_neo4j_driver, close_neo4j_driver
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -32,6 +33,14 @@ except Exception as e:
     print("Please make sure you have run extract_data.py first to generate the CSV files.")
     sys.exit(1)
 
+# Initialize Neo4j driver
+try:
+    neo4j_driver = get_neo4j_driver()
+    print("Neo4j driver initialized successfully")
+except Exception as e:
+    print(f"Failed to initialize Neo4j driver: {e}")
+    sys.exit(1)
+
 # Initialize recommenders
 content_recommender = ContentBasedRecommender(
     uri="bolt://v2202411241288295404.powersrv.de:7687",
@@ -42,6 +51,11 @@ collab_recommender = CollaborativeFiltering(n_users=1000, n_restaurants=1000)
 
 from .routes import router
 app.include_router(router)
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    """Clean up resources on shutdown."""
+    close_neo4j_driver()
 
 if __name__ == "__main__":
     import uvicorn

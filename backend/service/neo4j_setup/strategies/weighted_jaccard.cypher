@@ -79,4 +79,4 @@ CALL {
 
 RETURN restaurant, score, r_cats
 ORDER BY score DESC
-LIMIT n_top
+LIMIT $top_n
