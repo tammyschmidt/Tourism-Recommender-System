@@ -2,7 +2,15 @@ from neomodel import StructuredNode, StringProperty, UniqueIdProperty, Relations
 
 class User(StructuredNode):
     uid = UniqueIdProperty()
-    name = StringProperty(unique_index=True, required=True)
+    name = StringProperty(required=True)
+    review_count = IntegerProperty(required=True)
+    yelping_since = StringProperty(required=True)
+    average_stars = FloatProperty(required=True)
+    useful = IntegerProperty(required=True)
+    #funny = IntegerProperty(required=True)
+    #cool = IntegerProperty(required=True)
+    fans = IntegerProperty(required=True)
+
 
     reviews = RelationshipFrom('recsys_kg.models.review.Review', 'WRITTEN_BY')
 
