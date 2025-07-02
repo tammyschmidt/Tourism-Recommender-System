@@ -12,3 +12,6 @@ FOR (u:User) REQUIRE u.id IS UNIQUE;
 
 CREATE CONSTRAINT constraint_review_id IF NOT EXISTS
 FOR (rev:Review) REQUIRE rev.id IS UNIQUE;
+
+CREATE CONSTRAINT constraint_attribute_name IF NOT EXISTS
+FOR (a:Attribute) REQUIRE a.name IS UNIQUE;

@@ -3,7 +3,7 @@
 // using weighted Jaccard similarity index
 // based on an extended list of allowed input categories using the graph hierarchy
 // Weights: {Self: 1, Descendants: 1, Parent: 0.5, Sibling: 0.3}
-// Input: inputCategories, top_n
+// Input: categories, top_n
 // Output: list of top_n recommended restaurants
 // ==============================
 
@@ -11,7 +11,7 @@
 // :param top_n => 5;
 
 
-WITH $inputCategories AS inputCategories,
+WITH $categories AS inputCategories,
      $top_n AS top_n
 
 // STEP 1: Get extended set of input categories with weights
@@ -57,7 +57,7 @@ CALL {
   WITH collect({
     cat: qw.name,
     q_weight: qw.weight,
-    r_weight: CASE WHEN qw.name IN r_cats THEN 1.0 ELSE 0.0 END
+    r_weight: CASE WHEN qw.name IN r_cats THEN qw.weight ELSE 0.0 END
   }) AS combined
 
   WITH combined,
