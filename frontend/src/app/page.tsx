@@ -201,7 +201,7 @@ export default function RestaurantFinder() {
                       <div className="flex items-center justify-between">
                         <Label className="flex items-center gap-2">
                           <Clock className="w-4 h-4" />
-                          Wait Time
+                          Cuisine Similarity
                         </Label>
                         <span className="text-sm text-gray-500">{searchCriteria.preferences.waitTime[0]}%</span>
                       </div>

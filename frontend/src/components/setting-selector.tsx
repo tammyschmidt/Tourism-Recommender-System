@@ -15,7 +15,7 @@ const settings = [
   { id: "fine-dining", label: "Fine Dining", icon: Utensils, description: "Upscale cuisine and service" },
 ]
 
-export default function SettingSelector({ onSettingChange }: SettingSelectorProps) {
+export default function SettingSelector({ onSettingChange }: Readonly<SettingSelectorProps>) {
   const [selectedSetting, setSelectedSetting] = useState("")
 
   const handleSettingSelect = (settingId: string) => {

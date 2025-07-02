@@ -9,6 +9,7 @@
 import pandas as pd
 import json
 import os
+import re
 
 # Get the directory where the script is located
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -76,7 +77,7 @@ print("Filtering restaurants...")
 restaurants = df[df['categories'].str.contains('Restaurant', na=False)]
 
 # Extract columns
-restaurants_df = restaurants[['business_id', 'name', 'city', 'latitude', 'longitude', 'stars', 'review_count', 'attributes', 'categories']]
+restaurants_df = restaurants[['business_id', 'name', 'city', 'latitude', 'longitude', 'stars', 'review_count', 'attributes', 'categories', 'hours']]
 
 # Extract price_range
 def get_price(attr):
@@ -89,14 +90,53 @@ restaurants_df = restaurants_df.copy()
 restaurants_df.loc[:, 'price_range'] = restaurants_df['attributes'].apply(get_price)
 
 # Create restaurants dataframe
-restaurants_final = restaurants_df[['business_id', 'name', 'city', 'latitude', 'longitude', 'price_range', 'stars', 'review_count', 'categories', 'attributes']].copy()
-restaurants_final.columns = ['restaurant_id', 'name', 'city', 'latitude', 'longitude', 'price_range', 'rating', 'review_count', 'categories', 'attributes']
+restaurants_final = restaurants_df[['business_id', 'name', 'city', 'latitude', 'longitude', 'price_range', 'stars', 'review_count', 'categories', 'attributes', 'hours']].copy()
+restaurants_final.columns = ['restaurant_id', 'name', 'city', 'latitude', 'longitude', 'price_range', 'rating', 'review_count', 'categories', 'attributes', 'hours']
 
 # price_range is missing, convert to 0
 restaurants_final.loc[:, 'price_range'] = pd.to_numeric(restaurants_final['price_range'], errors='coerce').fillna(0).astype(int)
+
+def format_time(time_str):
+    """Format a time string to HH:mm (e.g., 7:0 -> 07:00)"""
+    if not isinstance(time_str, str):
+        return time_str
+    match = re.match(r"(\d{1,2}):(\d{1,2})", time_str)
+    if match:
+        hour, minute = match.groups()
+        return f"{int(hour):02d}:{int(minute):02d}"
+    return time_str
+
+def format_hours_dict(hours):
+    """Format all times in the hours dict to HH:mm and return as JSON string with double quotes."""
+    if not isinstance(hours, dict):
+        return json.dumps({})
+    formatted = {}
+    for day, time_range in hours.items():
+        if isinstance(time_range, str):
+            parts = time_range.split('-')
+            if len(parts) == 2:
+                open_time = format_time(parts[0])
+                close_time = format_time(parts[1])
+                formatted[day] = f"{open_time}-{close_time}"
+            else:
+                formatted[day] = time_range
+        else:
+            formatted[day] = time_range
+    return json.dumps(formatted, ensure_ascii=False)
+
+def categories_to_json(cat_str):
+    """Convert categories string to list and then to JSON string with double quotes."""
+    if not isinstance(cat_str, str) or not cat_str.strip():
+        return json.dumps([])
+    cat_list = [cat.strip() for cat in cat_str.split(',') if cat.strip()]
+    return json.dumps(cat_list, ensure_ascii=False)
+
 # Convert categories to list
 restaurants_final.loc[:, 'category_list'] = restaurants_final['categories'].apply(lambda x: [cat.strip() for cat in x.split(',')] if pd.notnull(x) else [])
 restaurants_final.drop(columns=['categories'], inplace=True)
+
+# Format hours column as JSON string with double quotes and formatted times
+restaurants_final.loc[:, 'hours'] = restaurants_final['hours'].apply(format_hours_dict)
 
 # Analyze categories
 analyze_categories(restaurants_final)
@@ -114,6 +154,10 @@ filtered_restaurants = restaurants_final[
     )
 ]
 
+# Convert category_list to JSON string for output
+filtered_restaurants.loc[:, 'category_list'] = filtered_restaurants['category_list'].apply(lambda x: json.dumps(x, ensure_ascii=False))
+# Convert attributes to JSON string for output
+filtered_restaurants.loc[:, 'attributes'] = filtered_restaurants['attributes'].apply(lambda x: json.dumps(x, ensure_ascii=False) if isinstance(x, dict) else json.dumps({}))
 # Save filtered restaurants
 filtered_restaurants.to_csv(os.path.join(data_dir, 'restaurants.csv'), index=False)
 
