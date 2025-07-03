@@ -19,3 +19,4 @@ WITH r, category_score,
      END AS distance
 WHERE $maxDistance IS NULL OR distance <= $maxDistance
 
+

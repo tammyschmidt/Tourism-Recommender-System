@@ -1,4 +1,4 @@
-from neomodel import StructuredNode, StringProperty, IntegerProperty, FloatProperty, UniqueIdProperty, RelationshipTo
+from neomodel import StructuredNode, StringProperty, IntegerProperty, FloatProperty, UniqueIdProperty, MapProperty, RelationshipTo
 from .location import City, Country
 from .category import Category
 
@@ -11,6 +11,7 @@ class Restaurant(StructuredNode):
     rating = FloatProperty(index=True)
     budget = StringProperty(index=True) # low, middle, high
     reviews_count = IntegerProperty(index=True)
+    hours = MapProperty(index=True)
 
     # relationship
     city = RelationshipTo("City", 'LOCATED_IN_CITY')

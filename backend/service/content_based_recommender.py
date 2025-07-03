@@ -15,6 +15,7 @@ class AdvancedContentBasedRecommender:
     def get_recommendations(self, inputCategories, city=None, restaurant_id=None, coordinates=None, maxDistance=None, requiredAttributes=[], time=None, weights=(3, 1, 0.5, 2), top_n=5):
         alpha, beta, gamma, delta = weights
         latitude, longitude = coordinates if coordinates else (None, None)
+        requestedDay, requestedTime = time if time else (None, None)
         
         with self.driver.session() as session:
             
@@ -28,24 +29,18 @@ class AdvancedContentBasedRecommender:
                 else:
                     raise ValueError(f"No restaurant found with ID {restaurant_id}")
 
-            if time:
-                requestedDay, requestedTime = time
-            else: 
-                requestedDay = None
-                requestedTime = None
-
             parts = [
-                "neo4j_setup/multi_objectives/1_get_extended_categories.cypher",
-                "neo4j_setup/multi_objectives/2_match_restaurants.cypher",
-                "neo4j_setup/multi_objectives/3_filter_attributes.cypher",
-                #"neo4j_setup/multi_objectives/4_filter_hours.cypher",
+                "neo4j_setup/multi_objectives/1_match_restaurants.cypher",
+                "neo4j_setup/multi_objectives/2_filter_attributes.cypher",
+                "neo4j_setup/multi_objectives/3_filter_hours.cypher",
+                "neo4j_setup/multi_objectives/4_get_extended_categories.cypher",
                 "neo4j_setup/multi_objectives/5_derive_max_match.cypher",
                 "neo4j_setup/multi_objectives/6_calculate_distance.cypher",
                 "neo4j_setup/multi_objectives/7_compute_final_score.cypher"
             ]
 
             if city:
-                parts.insert(2, "neo4j_setup/multi_objectives/2C_filter_city.cypher")
+                parts.insert(2, "neo4j_setup/multi_objectives/1C_filter_city.cypher")
 
 
             query = "\n".join([self.load_query(path) for path in parts])
@@ -132,7 +127,7 @@ if __name__ == "__main__":
     parser.add_argument("--city", help="City of interest")
     parser.add_argument("--restaurant_id", help="Input restaurant ID (goal: find similar ones)")
     parser.add_argument("--coordinates", type=float, nargs=2, help="Latitude and longitude for location of interest")
-    parser.add_argument("--maxDistance", help="Maximum distance from given location")
+    parser.add_argument("--maxDistance", type=float, help="Maximum distance from given location in km")
     parser.add_argument("--requiredAttributes", nargs="+", help="Must-have attributes for restaurants, seperated with a whitespace")
     parser.add_argument("--time", nargs = 2, help="Weekday and daytime of interest (Weekday HH:mm)")
     parser.add_argument("--weights", nargs="*", type=int, default=[3, 1, 0.5, 1], help="Weight coefficients for category similarity, price, rating and distance (4 values or None for default)")
@@ -154,6 +149,7 @@ if __name__ == "__main__":
             weights=parse_weights(args.weights),
             top_n=args.top_n
         )
+
 
         for r in recommendations:
            print(f"{r['restaurant_name']} — Score: {r.get('multi_obj_score', 0):.2f}")

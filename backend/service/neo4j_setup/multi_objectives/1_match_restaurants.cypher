@@ -1,6 +1,6 @@
 // === match_restaurants.cypher ===
 
 // Fetch restaurants and their categories
-MATCH (r:Restaurant)-[:HAS_CATEGORY]->(c:Category)
+MATCH (r:Restaurant)
 
-WITH r, c, query_weights
+WITH r

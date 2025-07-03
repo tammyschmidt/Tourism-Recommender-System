@@ -1,7 +1,9 @@
 // === derive_max_match.cypher ===
 // Derive maximum-match score between a restaurant and the extended category input set
 
-WITH r, r_cats, query_weights
+MATCH (r)-[:HAS_CATEGORY]->(c:Category)
+
+WITH r, collect(DISTINCT c.name) AS r_cats, query_weights
 
 UNWIND query_weights AS qw
 WITH r, qw

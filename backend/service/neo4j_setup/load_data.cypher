@@ -15,8 +15,7 @@ CALL apoc.periodic.iterate(
       r.longitude = toFloatOrNull(row.longitude),
       r.priceRange = toIntegerOrNull(row.price_range),
       r.rating = toFloatOrNull(row.rating),
-      r.reviewCount = toIntegerOrNull(row.review_count),
-      r.hours = apoc.convert.fromJsonList(replace(row.hours, "None", "null"))
+      r.reviewCount = toIntegerOrNull(row.review_count)
 
   WITH r, row
   WHERE row.city IS NOT NULL AND NOT isEmpty(trim(row.city))
@@ -28,15 +27,23 @@ CALL apoc.periodic.iterate(
   //  AND trim(row.category_list) STARTS WITH '[' 
   //  AND trim(row.category_list) ENDS WITH ']'
 
-  // Problem with quotes replacement via driver, but working in browser
+
+  // Categories
   WITH r, replace(row.category_list, "'", '"') AS jsonList
   WITH r, apoc.convert.fromJsonList(jsonList) AS categoryNames
   UNWIND categoryNames AS categoryName
   MERGE (cat:Category {name: trim(categoryName)})
   MERGE (r)-[:HAS_CATEGORY]->(cat); 
-  ",
 
-  "
+  // Opening Hours
+  WITH r, apoc.convert.fromJsonMap(row.hours) AS hoursMap
+  UNWIND keys(hoursMap) AS day
+  WITH r, day, hoursMap[day] AS hours
+  WITH r, day, split(hours, '-') AS times
+  MERGE (h:OpeningHours {day: day, open: times[0], close: times[1]})
+  MERGE (r)-[:HAS_HOURS]->(h)
+  ",
+  
   {batchSize:1000, parallel:false}
 )
 
