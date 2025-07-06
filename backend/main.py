@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import pandas as pd
 import os
 import sys
-from service.content_based_recommender import ContentBasedRecommender
+from service.content_based_recommender import AdvancedContentBasedRecommender
 from service.collaborative_filtering import CollaborativeFiltering
 from utils.neo4j_driver import get_neo4j_driver, close_neo4j_driver
 
@@ -42,7 +42,7 @@ except Exception as e:
     sys.exit(1)
 
 # Initialize recommenders
-content_recommender = ContentBasedRecommender(
+content_recommender = AdvancedContentBasedRecommender(
     uri="bolt://v2202411241288295404.powersrv.de:7687",
     user="neo4j",
     password=os.getenv("NEO4J_PASSWORD", "2kJAHn195lk")
