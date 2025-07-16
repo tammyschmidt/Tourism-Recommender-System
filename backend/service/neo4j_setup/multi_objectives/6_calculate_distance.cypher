@@ -3,7 +3,8 @@
 
 WITH r, category_score,
      $latitude AS inputLat,
-     $longitude AS inputLon
+     $longitude AS inputLon,
+     CASE WHEN $maxDistance IS NOT NULL THEN $maxDistance ELSE 100 END AS maxDistance
 
 WITH r, category_score,
      CASE 
@@ -15,8 +16,8 @@ WITH r, category_score,
              (sin(radians((r.longitude - inputLon) / 2))) ^ 2
            )
          )
-       ELSE 0
+       ELSE 0.0
      END AS distance
-WHERE $maxDistance IS NULL OR distance <= $maxDistance
+WHERE distance <= maxDistance
 
 

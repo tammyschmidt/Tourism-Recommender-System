@@ -12,4 +12,5 @@ WITH r,
 WHERE requestedTime IS NULL OR 
       (bufferedOpenTime IS NOT NULL AND requestedTime >= bufferedOpenTime AND requestedTime <= closeTime)
 
-WITH r
+WITH DISTINCT r, 0.0 AS category_score
+

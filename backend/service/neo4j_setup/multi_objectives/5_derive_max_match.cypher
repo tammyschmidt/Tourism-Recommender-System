@@ -15,5 +15,3 @@ WITH r,
        WHEN size(matched_weights) = 0 THEN 0.0 
        ELSE reduce(maxW = 0.0, w IN matched_weights | CASE WHEN w > maxW THEN w ELSE maxW END)
      END AS category_score
-
-

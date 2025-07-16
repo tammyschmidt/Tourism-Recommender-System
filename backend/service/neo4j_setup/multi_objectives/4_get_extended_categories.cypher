@@ -31,3 +31,4 @@ WITH r, COALESCE(self_entries, []) + parent_entries + descendant_entries + COALE
 UNWIND all_entries AS entry
 WITH r, entry.name AS cat, max(entry.weight) AS weight
 WITH r, collect({name: cat, weight: weight}) AS query_weights
+
