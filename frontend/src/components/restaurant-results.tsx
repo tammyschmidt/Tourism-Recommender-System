@@ -1,7 +1,16 @@
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Star, MapPin, Clock, Phone, ExternalLink } from "lucide-react"
+import { Star, MapPin, Phone, ExternalLink, Loader2, AlertCircle, Utensils } from "lucide-react"
+import { 
+  type Restaurant,
+  getPopularRestaurants,
+  getLocationRecommendations,
+  getCityRecommendations,
+  getUserRecommendations,
+  geocodeLocation
+} from "@/services/api"
 
 interface SearchCriteria {
   location: string
@@ -20,52 +29,13 @@ interface RestaurantResultsProps {
   searchCriteria: SearchCriteria
 }
 
-const sampleRestaurants = [
-  {
-    id: 1,
-    name: "Bella Vista",
-    cuisine: "Italian",
-    rating: 4.5,
-    priceLevel: 2,
-    distance: "0.8 km",
-    waitTime: "15-20 min",
-    address: "Musterstraße 123, Berlin",
-    phone: "+49 30 12345678",
-    image: "/placeholder.svg?height=200&width=300",
-    description: "Authentic Italian cuisine in a cozy atmosphere.",
-    tags: ["Romantic", "Terrace", "Wine Bar"],
-  },
-  {
-    id: 2,
-    name: "Dragon Palace",
-    cuisine: "Asian",
-    rating: 4.3,
-    priceLevel: 2,
-    distance: "1.2 km",
-    waitTime: "10-15 min",
-    address: "Beispielweg 456, Berlin",
-    phone: "+49 30 87654321",
-    image: "/placeholder.svg?height=200&width=300",
-    description: "Modern Asian fusion cuisine with fresh ingredients.",
-    tags: ["Modern", "Sushi", "Vegetarian"],
-  },
-  {
-    id: 3,
-    name: "Gasthaus zum Hirsch",
-    cuisine: "German",
-    rating: 4.7,
-    priceLevel: 3,
-    distance: "2.1 km",
-    waitTime: "25-30 min",
-    address: "Traditionsgasse 789, Berlin",
-    phone: "+49 30 11223344",
-    image: "/placeholder.svg?height=200&width=300",
-    description: "Traditional German cuisine in a historic ambiance.",
-    tags: ["Traditional", "Beer Garden", "Family-Friendly"],
-  },
-]
+
 
 export default function RestaurantResults({ searchCriteria }: RestaurantResultsProps) {
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
   const getPriceSymbol = (level: number) => {
     return (
       "€".repeat(level) +
@@ -84,27 +54,136 @@ export default function RestaurantResults({ searchCriteria }: RestaurantResultsP
     )
   }
 
+  const fetchRestaurants = async () => {
+    setLoading(true)
+    setError(null)
+    
+    try {
+      let results: Restaurant[] = []
+      
+      // Convert preferences to weights
+      const weights = {
+        price: searchCriteria.preferences.price[0] / 100,
+        distance: searchCriteria.preferences.distance[0] / 100,
+        rating: searchCriteria.preferences.rating[0] / 100,
+      }
+      
+      if (searchCriteria.selectedUser) {
+        // User-based recommendations
+        const request = {
+          city: searchCriteria.location || 'Berlin',
+          categories: searchCriteria.cuisines.length > 0 ? searchCriteria.cuisines : undefined,
+          attributes: searchCriteria.setting ? [searchCriteria.setting] : undefined,
+        }
+        results = await getUserRecommendations(searchCriteria.selectedUser, request)
+      } else if (searchCriteria.location) {
+        // Check if location looks like a city name or coordinates
+        const isCity = isNaN(parseFloat(searchCriteria.location))
+        
+        if (isCity) {
+          // City-based recommendations
+          const request = {
+            city: searchCriteria.location,
+            categories: searchCriteria.cuisines.length > 0 ? searchCriteria.cuisines : undefined,
+            attributes: searchCriteria.setting ? [searchCriteria.setting] : undefined,
+            weights: Object.keys(weights).length > 0 ? weights : undefined,
+          }
+          results = await getCityRecommendations(request)
+        } else {
+          // Try to geocode the location for location-based search
+          try {
+            const coordinates = await geocodeLocation(searchCriteria.location)
+            const request = {
+              latitude: coordinates.latitude,
+              longitude: coordinates.longitude,
+              max_distance: 5000, // 5km default
+              categories: searchCriteria.cuisines.length > 0 ? searchCriteria.cuisines : undefined,
+              attributes: searchCriteria.setting ? [searchCriteria.setting] : undefined,
+              weights: Object.keys(weights).length > 0 ? weights : undefined,
+            }
+            results = await getLocationRecommendations(request)
+          } catch (geocodeError) {
+            // Fallback to city search if geocoding fails
+            const request = {
+              city: searchCriteria.location,
+              categories: searchCriteria.cuisines.length > 0 ? searchCriteria.cuisines : undefined,
+              attributes: searchCriteria.setting ? [searchCriteria.setting] : undefined,
+              weights: Object.keys(weights).length > 0 ? weights : undefined,
+            }
+            results = await getCityRecommendations(request)
+          }
+        }
+      } else {
+        // Default to popular restaurants
+        results = await getPopularRestaurants()
+      }
+      
+      setRestaurants(results)
+    } catch (err) {
+      console.error('Error fetching restaurants:', err)
+      setError(err instanceof Error ? err.message : 'An error occurred while fetching restaurants')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchRestaurants()
+  }, [searchCriteria])
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <Loader2 className="w-8 h-8 animate-spin mr-2" />
+        <span className="text-lg">Finding restaurants...</span>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <div className="text-center">
+          <AlertCircle className="h-8 w-8 text-red-500 mx-auto mb-4" />
+          <p className="text-red-600 mb-4">{error}</p>
+          <Button 
+            variant="outline" 
+            onClick={fetchRestaurants}
+          >
+            Try Again
+          </Button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-6">
       <div className="text-center">
         <h2 className="text-2xl font-bold mb-2">Restaurants Found</h2>
         <p className="text-gray-600">
-          {sampleRestaurants.length} restaurants found
+          {restaurants.length} restaurants found
           {searchCriteria.location && ` in ${searchCriteria.location}`}
           {searchCriteria.selectedUser && ` for ${searchCriteria.selectedUser}`}
         </p>
       </div>
 
-      <div className="grid gap-6">
-        {sampleRestaurants.map((restaurant) => (
+      {restaurants.length === 0 ? (
+        <div className="text-center py-12">
+          <p className="text-gray-500 text-lg mb-4">No restaurants found matching your criteria.</p>
+          <Button onClick={fetchRestaurants} variant="outline">
+            Search Again
+          </Button>
+        </div>
+      ) : (
+        <div className="grid gap-6">
+          {restaurants.map((restaurant) => (
           <Card key={restaurant.id} className="overflow-hidden hover:shadow-lg transition-shadow">
             <div className="md:flex">
               <div className="md:w-1/3">
-                <img
-                  src={restaurant.image || "/placeholder.svg"}
-                  alt={restaurant.name}
-                  className="w-full h-48 md:h-full object-cover"
-                />
+                <div className="w-full h-48 md:h-full bg-gradient-to-br from-orange-100 to-red-100 flex items-center justify-center">
+                  <Utensils className="w-16 h-16 text-orange-400" />
+                </div>
               </div>
               <div className="md:w-2/3">
                 <CardHeader>
@@ -112,62 +191,69 @@ export default function RestaurantResults({ searchCriteria }: RestaurantResultsP
                     <div>
                       <CardTitle className="text-xl">{restaurant.name}</CardTitle>
                       <CardDescription className="flex items-center gap-4 mt-1">
-                        <Badge variant="outline">{restaurant.cuisine}</Badge>
+                        {restaurant.categories && restaurant.categories.length > 0 && (
+                          <Badge variant="outline">{restaurant.categories[0]}</Badge>
+                        )}
                         <div className="flex items-center gap-1">
                           <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                           <span className="font-medium">{restaurant.rating}</span>
                         </div>
-                        <div className="flex items-center">{getPriceSymbol(restaurant.priceLevel)}</div>
+                        <div className="flex items-center">{getPriceSymbol(restaurant.price_level)}</div>
                       </CardDescription>
                     </div>
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600 mb-4">{restaurant.description}</p>
+                  {restaurant.description && (
+                    <p className="text-gray-600 mb-4">{restaurant.description}</p>
+                  )}
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                     <div className="flex items-center gap-2 text-sm">
                       <MapPin className="w-4 h-4 text-gray-400" />
-                      <span>{restaurant.distance}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm">
-                      <Clock className="w-4 h-4 text-gray-400" />
-                      <span>{restaurant.waitTime}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm">
-                      <MapPin className="w-4 h-4 text-gray-400" />
                       <span>{restaurant.address}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-sm">
-                      <Phone className="w-4 h-4 text-gray-400" />
-                      <span>{restaurant.phone}</span>
-                    </div>
+                    {restaurant.phone && (
+                      <div className="flex items-center gap-2 text-sm">
+                        <Phone className="w-4 h-4 text-gray-400" />
+                        <span>{restaurant.phone}</span>
+                      </div>
+                    )}
                   </div>
 
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {restaurant.tags.map((tag) => (
-                      <Badge key={tag} variant="secondary" className="text-xs">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
+                  {restaurant.categories && restaurant.categories.length > 1 && (
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {restaurant.categories.slice(1).map((category, index) => (
+                        <Badge key={index} variant="secondary" className="text-xs">
+                          {category}
+                        </Badge>
+                      ))}
+                    </div>
+                  )}
 
                   <div className="flex gap-2">
-                    <Button className="flex-1">
-                      <Phone className="w-4 h-4 mr-2" />
-                      Call
-                    </Button>
-                    <Button variant="outline" className="flex-1">
+                    {restaurant.phone && (
+                      <Button className="flex-1" onClick={() => window.open(`tel:${restaurant.phone}`)}>
+                        <Phone className="w-4 h-4 mr-2" />
+                        Call
+                      </Button>
+                    )}
+                    <Button 
+                      variant="outline" 
+                      className="flex-1"
+                      onClick={() => window.open(`https://maps.google.com/?q=${encodeURIComponent(restaurant.address)}`, '_blank')}
+                    >
                       <ExternalLink className="w-4 h-4 mr-2" />
-                      Details
+                      View on Map
                     </Button>
                   </div>
                 </CardContent>
               </div>
             </div>
           </Card>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
