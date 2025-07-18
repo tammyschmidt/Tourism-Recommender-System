@@ -13,10 +13,18 @@ WITH r,
     category_score, price_range, rating_score, distance,
     ($alpha * toFloat(category_score) + $beta * ((rating_score - 1.0) / 4.0) - $gamma * (distance / maxDistance) - $delta * (price_range / 4)) AS multi_obj_score
 
+MATCH (r)-[:HAS_CATEGORY]->(c:Category)
+MATCH (r)-[:HAS_ATTRIBUTE]->(a:Attribute)
+
 RETURN 
-  r.id AS restaurant_id,
-  r.name AS restaurant_name,
-  multi_obj_score,
-  category_score, rating_score, distance, price_range,
+  r.id AS id,
+  r.name AS name,
+  collect(DISTINCT c.name) AS categories,
+  r.rating AS rating,
+  r.price_range AS price_level,
+  r.latitude AS latitude,
+  r.longitude AS longitude,
+  collect(DISTINCT a.name) AS attributes,
+  multi_obj_score
 ORDER BY multi_obj_score DESC
 LIMIT $top_n

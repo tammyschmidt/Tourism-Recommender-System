@@ -177,9 +177,9 @@ if __name__ == "__main__":
     try:
         recommendations = recommender.get_recommendations(**kwargs)
 
-        #print(recommendations)
-        for r in recommendations:
-           print(f"{r['restaurant_name']} — Score: {r.get('multi_obj_score', 0):.2f} — Cuisine Similarity: {r.get('category_score', 0):.2f} — Price: {r.get('price_range', 0):.2f} — Rating: {r.get('rating_score', 0):.2f} — Distance: {r.get('distance', 0):.2f}")
+        print(recommendations)
+        #for r in recommendations:
+           #print(f"{r['restaurant_name']} — Score: {r.get('multi_obj_score', 0):.2f} — Cuisine Similarity: {r.get('category_score', 0):.2f} — Price: {r.get('price_range', 0):.2f} — Rating: {r.get('rating_score', 0):.2f} — Distance: {r.get('distance', 0):.2f}")
 
         print("Recommendation query ran successfully.")
 
