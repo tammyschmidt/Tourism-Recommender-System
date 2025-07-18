@@ -28,6 +28,15 @@ class AdvancedContentBasedRecommender:
             - top_n (int): Number of recommendations to display
 
     """
+
+    def get_popular_restaurants():
+            with self.driver.session() as session:
+            
+            res_query = self.load_query("neo4j_setup/get_popular_restaurants.cypher")
+            result = session.run(res_query).single()
+
+            return [record.data() for record in result]
+
     def get_recommendations(self, inputCategories=[], city=None, restaurant_id=None, coordinates=None, maxDistance=None, requiredAttributes=[], time=None, weights=(1, 0.5, 0.25, 0), top_n=5):
         alpha, beta, gamma, delta = weights
         latitude, longitude = coordinates if coordinates else (None, None)
