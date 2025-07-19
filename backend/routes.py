@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from typing import List, Optional
+from typing import List
 from pydantic import BaseModel
 import pandas as pd
 from .dependencies import restaurants_df, users_df, content_recommender, collab_recommender

@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from utils.neo4j_driver import close_neo4j_driver
-import backend.routes as routes
+from .utils.neo4j_driver import close_neo4j_driver
+from .routes import router
 
 app = FastAPI()
 
@@ -13,7 +13,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(routes.router)
+app.include_router(router)
 
 @app.on_event("shutdown")
 async def shutdown_event():
