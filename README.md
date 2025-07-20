@@ -39,20 +39,6 @@ NEO4J_PASSWORD=your_neo4j_password
 
 ## Running the Application
 
-### Option 1: Run both frontend and backend together
-
-Simply run:
-```bash
-python run.py
-```
-
-This will:
-- Start the backend server on http://localhost:8000
-- Start the frontend development server on http://localhost:5173
-- Open the frontend in your default browser
-
-### Option 2: Run frontend and backend separately
-
 1. Start the backend server:
 ```bash
 cd backend
@@ -109,8 +95,4 @@ Once the backend is running, you can access the API documentation at:
 - **User-Specific Recommendations**: Get personalized recommendations based on user preferences and history
 - **Advanced Filtering**: Filter by categories, attributes, and custom weights
 - **Customizable Scoring**: Weight different factors like price, rating, and distance
-
-## Stopping the Application
-
-- If running with `run.py`: Press `Ctrl+C` in the terminal
-- If running separately: Press `Ctrl+C` in each terminal window 
+ 
