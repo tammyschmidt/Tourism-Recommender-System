@@ -15,26 +15,21 @@ class Restaurant(BaseModel):
     price_level: int
     latitude: float
     longitude: float
-    address: str
-    phone: str
     attributes: dict
-    description: str = None
 
 
-class LocationRecommendationRequest(BaseModel):
-    latitude: float
-    longitude: float
-    max_distance: int
-    categories: List[str] = None
-    attributes: List[str] = None
-    weights: dict = None
-
-
-class CityRecommendationRequest(BaseModel):
-    city: str
-    categories: List[str] = None
-    attributes: List[str] = None
-    weights: dict = None
+class RecommendationRequest(BaseModel):
+    restaurant_id: str = None
+    city: str = None
+    latitude: float = None
+    longitude: float = None
+    inputCategories: List[str] = None
+    maxDistance: int = None
+    requiredAttributes: List[str] = None
+    requestedDay: str = None
+    requestedTime: str = None
+    weights: List[float] = None
+    top_n: int = 10
 
 
 class UserRecommendationRequest(BaseModel):
@@ -43,87 +38,45 @@ class UserRecommendationRequest(BaseModel):
     attributes: List[str] = None
 
 
+
+# delete or derive from KG with cypher! (not csv files)
 @router.get("/restaurants/popular", response_model=List[Restaurant])
 async def get_popular_restaurants():
-    popular_df = restaurants_df[
-        (restaurants_df['review_count'] > 200) &
-        (restaurants_df['rating'] >= 4.5)
-        ]
-    if len(popular_df) > 10:
-        popular_df = popular_df.sample(n=10)
-    return popular_df.to_dict('records')
-
-
-@router.get("/recommendations/by-location", response_model=List[Restaurant])
-async def get_location_recommendations(request: LocationRecommendationRequest):
     try:
-        recommendations = content_recommender.get_recommendations(
-            inputCategories=request.categories or [],
-            coordinates=(request.latitude, request.longitude),
-            maxDistance=request.max_distance / 1000,
-            requiredAttributes=request.attributes or [],
-            top_n=20
-        )
+        popular_restaurants = content_recommender.get_popular_restaurants()
 
-        recs_df = pd.DataFrame(recommendations)
-        if not recs_df.empty:
-            if 'distance' in recs_df.columns:
-                recs_df = recs_df[recs_df['distance'] <= request.max_distance / 1000]
+        recs_df = pd.DataFrame(popular_restaurants)
 
-            if request.weights and not recs_df.empty:
-                total_weight = sum(request.weights.values())
-                weights = {k: v / total_weight for k, v in request.weights.items()}
+        # TODO: use results as necessary to display in frontend
 
-                if 'price_level' in recs_df.columns and 'rating' in recs_df.columns:
-                    recs_df['weighted_score'] = (
-                            weights.get('price', 0) * (1 - recs_df['price_level'] / 4) +
-                            weights.get('rating', 0) * recs_df['rating'] / 5 +
-                            weights.get('distance', 0) * (1 - recs_df['distance'] / request.max_distance)
-                    )
-                    recs_df = recs_df.sort_values('weighted_score', ascending=False)
-                else:
-                    if 'multi_obj_score' in recs_df.columns:
-                        recs_df = recs_df.sort_values('multi_obj_score', ascending=False)
-
-        return recs_df.head(10).to_dict('records')
+        return recs_df.to_dict('records')
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@router.get("/recommendations/by-city", response_model=List[Restaurant])
-async def get_city_recommendations(request: CityRecommendationRequest):
+@router.get("/recommendations", response_model=List[Restaurant])
+async def get_recommendations(request: RecommendationRequest):
     try:
         recommendations = content_recommender.get_recommendations(
-            inputCategories=request.categories or [],
+            restaurant_id=request.restaurant_id,
             city=request.city,
-            requiredAttributes=request.attributes or [],
-            top_n=20
+            coordinates=(request.latitude, request.longitude),
+            inputCategories=request.categories or [],
+            maxDistance=request.maxDistance,
+            requiredAttributes=request.requiredAttributes or [],
+            time=(request.requestedDay, request.requestedTime),
+            weights=request.weights,
+            top_n=request.top_n
         )
 
         recs_df = pd.DataFrame(recommendations)
 
-        if request.weights and not recs_df.empty:
-            total_weight = sum(request.weights.values())
-            weights = {k: v / total_weight for k, v in request.weights.items()}
+        # TODO: use results as necessary to display in frontend
 
-            if 'price_level' in recs_df.columns and 'rating' in recs_df.columns:
-                recs_df['weighted_score'] = (
-                        weights.get('price', 0) * (1 - recs_df['price_level'] / 4) +
-                        weights.get('rating', 0) * recs_df['rating'] / 5
-                )
-                recs_df = recs_df.sort_values('weighted_score', ascending=False)
-            else:
-                if 'multi_obj_score' in recs_df.columns:
-                    recs_df = recs_df.sort_values('multi_obj_score', ascending=False)
-        else:
-            if 'multi_obj_score' in recs_df.columns:
-                recs_df = recs_df.sort_values('multi_obj_score', ascending=False)
-            elif 'rating' in recs_df.columns:
-                recs_df = recs_df.sort_values('rating', ascending=False)
-
-        return recs_df.head(10).to_dict('records')
+        return recs_df.to_dict('records')
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
 
 
 @router.get("/users/{user_name}/recommendations", response_model=List[Restaurant])
