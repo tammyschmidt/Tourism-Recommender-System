@@ -1,9 +1,9 @@
 import pandas as pd
 import os
 import sys
-from service.content_based_recommender import AdvancedContentBasedRecommender
-from service.collaborative_filtering import CollaborativeFiltering
-from utils.neo4j_driver import get_neo4j_driver
+from .service.content_based_recommender import AdvancedContentBasedRecommender
+from .service.collaborative_filtering import CollaborativeFiltering
+from .utils.neo4j_driver import get_neo4j_driver
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 data_dir = os.path.join(script_dir, 'data')
