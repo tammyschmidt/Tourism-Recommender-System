@@ -1,39 +1,45 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
-import { MapPin, Building, Search } from "lucide-react"
+import { MapPin, Building, Search, Loader2, AlertTriangle } from "lucide-react"
+import { getPopularRestaurants, type Restaurant } from "@/services/api"
 
 interface LocationSelectorProps {
   onLocationChange: (location: string) => void
 }
 
-const popularRestaurants = [
-  "Zur Letzten Instanz, Berlin",
-  "Ratskeller, Munich",
-  "Peters Brauhaus, Cologne",
-  "Hanse-Kogge, Hamburg",
-  "Goldener Hirsch, Salzburg",
-]
-
-const popularCities = [
-  "Berlin",
-  "Munich",
-  "Hamburg",
-  "Cologne",
-  "Frankfurt",
-  "Stuttgart",
-  "Düsseldorf",
-  "Leipzig",
-  "Dresden",
-  "Hanover",
-]
-
 export default function LocationSelector({ onLocationChange }: LocationSelectorProps) {
   const [selectedLocation, setSelectedLocation] = useState("")
   const [customLocation, setCustomLocation] = useState("")
+  const [popularRestaurants, setPopularRestaurants] = useState<Restaurant[]>([])
+  const [popularCities, setPopularCities] = useState<string[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      try {
+        setIsLoading(true)
+        const fetchedRestaurants = await getPopularRestaurants()
+        setPopularRestaurants(fetchedRestaurants)
+
+        const cities = [...new Set(fetchedRestaurants.map(r => r.address).filter(Boolean) as string[])]
+        setPopularCities(cities.sort())
+        
+        setError(null)
+      } catch (err) {
+        console.error("Failed to fetch initial data:", err)
+        setError("Could not load restaurant data. Please try again later.")
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchInitialData()
+  }, [])
 
   const handleLocationSelect = (location: string) => {
     setSelectedLocation(location)
@@ -45,12 +51,33 @@ export default function LocationSelector({ onLocationChange }: LocationSelectorP
       handleLocationSelect(customLocation.trim())
     }
   }
+  
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center p-8">
+        <Loader2 className="w-6 h-6 animate-spin" />
+        <span className="ml-2">Loading data...</span>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="p-4 text-red-700 bg-red-100 border border-red-400 rounded-lg">
+        <div className="flex items-center">
+          <AlertTriangle className="w-5 h-5 mr-2"/>
+          <strong>Error:</strong>
+        </div>
+        <p>{error}</p>
+      </div>
+    )
+  }
 
   return (
     <Tabs defaultValue="restaurant" className="w-full">
       <TabsList className="grid w-full grid-cols-3">
         <TabsTrigger value="restaurant" className="text-xs">
-          Restaurant
+          Popular
         </TabsTrigger>
         <TabsTrigger value="location" className="text-xs">
           Enter Location
@@ -65,13 +92,16 @@ export default function LocationSelector({ onLocationChange }: LocationSelectorP
         <div className="grid gap-2">
           {popularRestaurants.map((restaurant) => (
             <Button
-              key={restaurant}
-              variant={selectedLocation === restaurant ? "default" : "outline"}
+              key={restaurant.id}
+              variant={selectedLocation === `${restaurant.name}, ${restaurant}` ? "default" : "outline"}
               className="justify-start h-auto p-3 text-left"
-              onClick={() => handleLocationSelect(restaurant)}
+              onClick={() => handleLocationSelect(`${restaurant.name}, ${restaurant.address}`)}
             >
               <Building className="w-4 h-4 mr-2 flex-shrink-0" />
-              <span className="truncate">{restaurant}</span>
+              <div className="flex flex-col">
+                <span className="font-semibold">{restaurant.name}</span>
+                <span className="text-xs text-muted-foreground">{restaurant.address}</span>
+              </div>
             </Button>
           ))}
         </div>
@@ -84,7 +114,7 @@ export default function LocationSelector({ onLocationChange }: LocationSelectorP
         <div className="flex gap-2">
           <Input
             id="custom-location"
-            placeholder="e.g., Alexanderplatz, Berlin or 10178"
+            placeholder="e.g., Nashville, TN or 37203"
             value={customLocation}
             onChange={(e) => setCustomLocation(e.target.value)}
             onKeyPress={(e) => e.key === "Enter" && handleCustomLocationSubmit()}
@@ -102,7 +132,7 @@ export default function LocationSelector({ onLocationChange }: LocationSelectorP
             <Badge
               key={city}
               variant={selectedLocation === city ? "default" : "outline"}
-              className="cursor-pointer hover:bg-primary hover:text-primary-foreground"
+              className="cursor-pointer hover:bg-primary hover:text-primary-foreground text-sm p-2"
               onClick={() => handleLocationSelect(city)}
             >
               <MapPin className="w-3 h-3 mr-1" />

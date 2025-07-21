@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="44341331-9141-48ab-82ff-2eef4d3d8cef" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="44341331-9141-48ab-82ff-2eef4d3d8cef" name="Changes" comment="Testing, if this work for deployment.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/dependencies.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/dependencies.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/service/content_based_recommender.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/service/content_based_recommender.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,8 +177,20 @@
       <workItem from="1752782618274" duration="414000" />
       <workItem from="1752783683276" duration="833000" />
       <workItem from="1752826815454" duration="1233000" />
-      <workItem from="1752967113728" duration="1320000" />
+      <workItem from="1752967113728" duration="2145000" />
+      <workItem from="1753007313684" duration="268000" />
+      <workItem from="1753087826002" duration="208000" />
+      <workItem from="1753088105287" duration="157000" />
     </task>
+    <task id="LOCAL-00001" summary="Testing, if this work for deployment.">
+      <option name="closed" value="true" />
+      <created>1752968445264</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1752968445264</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -196,6 +206,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Testing, if this work for deployment." />
+    <option name="LAST_COMMIT_MESSAGE" value="Testing, if this work for deployment." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Team_W1$main.coverage" NAME="main Coverage Results" MODIFIED="1752826851392" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/backend" />

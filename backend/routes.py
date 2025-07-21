@@ -1,106 +1,96 @@
-from fastapi import APIRouter, HTTPException
-from typing import List
+from fastapi import APIRouter, HTTPException, Query
+from typing import List, Optional
 from pydantic import BaseModel
 import pandas as pd
-from .dependencies import restaurants_df, users_df, content_recommender
+from .dependencies import users_df, content_recommender
 
 router = APIRouter()
 
 
 class Restaurant(BaseModel):
     id: str
-    name: str
-    categories: List[str]
-    rating: float
-    price_level: int
-    latitude: float
-    longitude: float
-    attributes: List[str]
+    name: Optional[str] = None
+    categories: Optional[List[str]] = None
+    rating: Optional[float] = None
+    price_level: Optional[int] = None
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
+    attributes: Optional[List[str]] = None
+    address: Optional[str] = None
+    phone: Optional[str] = None
+    description: Optional[str] = None
 
 
-class RecommendationRequest(BaseModel):
-    restaurant_id: str = None
-    city: str = None
-    latitude: float = None
-    longitude: float = None
-    inputCategories: List[str] = None
-    maxDistance: int = None
-    requiredAttributes: List[str] = None
-    requestedDay: str = None
-    requestedTime: str = None
-    weights: List[float] = None
-    top_n: int = 10
+def align_df_to_model(df: pd.DataFrame, model: BaseModel) -> List[dict]:
+    if df.empty:
+        return []
+
+    rename_map = {
+        'restaurant_id': 'id',
+        'category_list': 'categories',
+        'price_range': 'price_level'
+    }
+    df.rename(columns=rename_map, inplace=True, errors='ignore')
+
+    model_fields = list(model.model_fields.keys())
+    
+    for field in model_fields:
+        if field not in df.columns:
+            df[field] = None
+
+    final_df = df[model_fields]
+    return final_df.to_dict('records')
 
 
-class UserRecommendationRequest(BaseModel):
-    city: str
-    categories: List[str] = None
-    attributes: List[str] = None
-
-
-
-# delete or derive from KG with cypher! (not csv files)
-@router.get("/restaurants/popular", response_model=List[Restaurant])
+@router.get("/restaurants/popular", response_model=List[Restaurant], tags=["Restaurants"])
 async def get_popular_restaurants():
     try:
         popular_restaurants = content_recommender.get_popular_restaurants()
-
         recs_df = pd.DataFrame(popular_restaurants)
-
-        # TODO: use results as necessary to display in frontend
-
-        return recs_df.to_dict('records')
+        return align_df_to_model(recs_df, Restaurant)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@router.get("/recommendations", response_model=List[Restaurant])
-async def get_recommendations(request: RecommendationRequest):
+@router.get("/recommendations", response_model=List[Restaurant], tags=["Recommendations"])
+async def get_recommendations(
+    restaurant_id: Optional[str] = None,
+    city: Optional[str] = None,
+    latitude: Optional[float] = None,
+    longitude: Optional[float] = None,
+    inputCategories: Optional[List[str]] = Query(None),
+    maxDistance: Optional[int] = None,
+    requiredAttributes: Optional[List[str]] = Query(None),
+    requestedDay: Optional[str] = None,
+    requestedTime: Optional[str] = None,
+    weights: Optional[List[float]] = Query(None),
+    top_n: int = 10
+):
     try:
+        if weights is None:
+            final_weights = (1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0)
+        else:
+            final_weights = weights
+
+        if inputCategories is None:
+            final_inputCategories = []
+        else:
+            final_inputCategories = inputCategories
+
+        final_requiredAttributes = requiredAttributes or []
+
         recommendations = content_recommender.get_recommendations(
-            restaurant_id=request.restaurant_id,
-            city=request.city,
-            coordinates=(request.latitude, request.longitude),
-            inputCategories=request.categories or [],
-            maxDistance=request.maxDistance,
-            requiredAttributes=request.requiredAttributes or [],
-            time=(request.requestedDay, request.requestedTime),
-            weights=request.weights,
-            top_n=request.top_n
+            restaurant_id=restaurant_id,
+            city=city,
+            coordinates=(latitude, longitude) if latitude is not None and longitude is not None else None,
+            inputCategories=final_inputCategories,
+            maxDistance=maxDistance,
+            requiredAttributes=final_requiredAttributes,
+            time=(requestedDay, requestedTime) if requestedDay and requestedTime else None,
+            weights=final_weights,
+            top_n=top_n
         )
-
         recs_df = pd.DataFrame(recommendations)
-
-        # TODO: use results as necessary to display in frontend
-
-        return recs_df.to_dict('records')
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-
-@router.get("/users/{user_name}/recommendations", response_model=List[Restaurant])
-async def get_user_recommendations(user_name: str, request: UserRecommendationRequest):
-    try:
-        user = users_df[users_df['name'].str.lower() == user_name.lower()]
-        if user.empty:
-            raise HTTPException(status_code=404, detail=f"User {user_name} not found")
-        collab_recs = collab_recommender.get_recommendations(user.iloc[0]['id'], top_n=20)
-        if collab_recs.empty:
-            raise HTTPException(status_code=404, detail="No recommendations found for this user")
-        recs_df = pd.DataFrame(collab_recs)
-        recs_df = recs_df[recs_df['city'].str.lower() == request.city.lower()]
-        if request.categories:
-            mask = recs_df['categories'].apply(
-                lambda x: any(cat.lower() in str(x).lower() for cat in request.categories)
-            )
-            recs_df = recs_df[mask]
-        if request.attributes:
-            mask = recs_df['attributes'].apply(
-                lambda x: all(attr.lower() in str(x).lower() for attr in request.attributes)
-            )
-            recs_df = recs_df[mask]
-        recs_df = recs_df.sort_values('score', ascending=False)
-        return recs_df.head(10).to_dict('records')
+        return align_df_to_model(recs_df, Restaurant)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
