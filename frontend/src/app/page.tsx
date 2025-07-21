@@ -158,7 +158,7 @@ export default function RestaurantFinder() {
                         value={searchCriteria.preferences.price}
                         onValueChange={(value) => handlePreferenceChange("price", value)}
                         max={100}
-                        step={10}
+                        step={25}
                         className="w-full"
                       />
                     </div>
@@ -175,7 +175,7 @@ export default function RestaurantFinder() {
                         value={searchCriteria.preferences.distance}
                         onValueChange={(value) => handlePreferenceChange("distance", value)}
                         max={100}
-                        step={10}
+                        step={25}
                         className="w-full"
                       />
                     </div>
@@ -192,7 +192,7 @@ export default function RestaurantFinder() {
                         value={searchCriteria.preferences.rating}
                         onValueChange={(value) => handlePreferenceChange("rating", value)}
                         max={100}
-                        step={10}
+                        step={25}
                         className="w-full"
                       />
                     </div>
@@ -209,7 +209,7 @@ export default function RestaurantFinder() {
                         value={searchCriteria.preferences.waitTime}
                         onValueChange={(value) => handlePreferenceChange("waitTime", value)}
                         max={100}
-                        step={10}
+                        step={25}
                         className="w-full"
                       />
                     </div>

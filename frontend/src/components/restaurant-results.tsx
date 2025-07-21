@@ -37,8 +37,10 @@ export default function RestaurantResults({ searchCriteria }: RestaurantResultsP
   const getPriceSymbol = (level: number | null) => {
     if (level === null || level < 1) return null;
     return (
-      "€".repeat(level) +
-      <span className="opacity-30">{"€".repeat(Math.max(0, 4 - level))}</span>
+      <>
+        {"€".repeat(level)}
+        <span className="opacity-30">{"€".repeat(Math.max(0, 4 - level))}</span>
+      </>
     )
   }
 
@@ -59,15 +61,20 @@ export default function RestaurantResults({ searchCriteria }: RestaurantResultsP
         const request: RecommendationRequest = { top_n: 20 }
 
         if (searchCriteria.location) {
+          const parts = searchCriteria.location.split(',');
+          const cityName = parts[parts.length - 1]?.trim() || undefined;
+
           try {
             const coordinates = await geocodeLocation(searchCriteria.location)
             request.latitude = coordinates.latitude
             request.longitude = coordinates.longitude
-            request.city = searchCriteria.location
             request.maxDistance = 5000
           } catch (geocodeError) {
-            console.warn("Geocoding failed, falling back to city search:", geocodeError)
-            request.city = searchCriteria.location
+            console.warn("Geocoding failed, will proceed with city search only:", geocodeError)
+          }
+
+          if (cityName) {
+            request.city = cityName;
           }
         }
         
