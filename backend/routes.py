@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException
 from typing import List
 from pydantic import BaseModel
 import pandas as pd
-from .dependencies import restaurants_df, users_df, content_recommender, collab_recommender
+from .dependencies import restaurants_df, users_df, content_recommender
 
 router = APIRouter()
 
@@ -15,7 +15,7 @@ class Restaurant(BaseModel):
     price_level: int
     latitude: float
     longitude: float
-    attributes: dict
+    attributes: List[str]
 
 
 class RecommendationRequest(BaseModel):

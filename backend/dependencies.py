@@ -9,10 +9,11 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 data_dir = os.path.join(script_dir, 'data')
 
 try:
+    print("Loading data from csv:")
     restaurants_df = pd.read_csv(os.path.join(data_dir, 'restaurants.csv'), engine='python')
+    print("Loaded restaurant data")
     users_df = pd.read_csv(os.path.join(data_dir, 'users.csv'), engine='python')
-    reviews_df = pd.read_csv(os.path.join(data_dir, 'reviews.csv'), engine='python')
-    print("Loading data...")
+    print("Loaded users data")
 except Exception as e:
     print(f"Error loading data: {e}")
     sys.exit(1)
@@ -29,4 +30,3 @@ content_recommender = AdvancedContentBasedRecommender(
     user="neo4j",
     password=os.getenv("NEO4J_PASSWORD", "2kJAHn195lk")
 )
-collab_recommender = CollaborativeFiltering(n_users=1000, n_restaurants=1000)
