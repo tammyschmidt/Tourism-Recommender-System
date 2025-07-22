@@ -14,7 +14,7 @@ WITH r,
 
 WITH r,
      R,
-     CASE WHEN v < 50 THEN -1.0 + (log10(v + 1) / log10(51)) // trust at 50 reviews
+     CASE WHEN v < 50 THEN -1.0 + (log10(v) / log10(50)) // trust at 50 reviews
      ELSE 0 END AS penalty
 
 WITH r,
