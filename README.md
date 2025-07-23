@@ -1,98 +1,106 @@
 # Restaurant Recommendation System
 
-A full-stack application for restaurant recommendations using Yelp dataset. The application provides both content-based and collaborative filtering recommendations.
+This repository contains a full-stack application for restaurant recommendations, leveraging the Yelp dataset. The system supports both content-based and collaborative filtering, and is designed for easy reproducibility and future development.
+
+## Documentation & Reproducibility
+
+This README serves as comprehensive documentation to ensure that anyone can reproduce, deploy, and extend the project in the future. All setup steps, dependencies, and usage instructions are provided below.
 
 ## Prerequisites
 
 - Python 3.8 or higher
 - Node.js 16 or higher
-- npm (comes with Node.js)
-- Neo4j Database (for content-based recommendations)
+- npm (included with Node.js)
+- Neo4j Database (required for content-based recommendations)
 
 ## Installation
 
-1. Clone the repository:
-```bash
-git clone <repository-url>
-cd <repository-name>
-```
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd <repository-name>
+   ```
 
-2. Install backend dependencies:
-```bash
-cd backend
-pip install fastapi uvicorn pandas neo4j python-dotenv
-cd ..
-```
+2. **Install backend dependencies:**
+   ```bash
+   cd backend
+   pip install fastapi uvicorn pandas neo4j python-dotenv
+   cd ..
+   ```
 
-3. Install frontend dependencies:
-```bash
-cd frontend
-npm install
-cd ..
-```
+3. **Install frontend dependencies:**
+   ```bash
+   cd frontend
+   npm install
+   cd ..
+   ```
 
-4. Set up environment variables:
-Create a `.env` file in the backend directory with:
-```
-NEO4J_PASSWORD=your_neo4j_password
-```
+4. **Set up environment variables:**
+   - Create a `.env` file in the `backend` directory with the following content:
+     ```
+     NEO4J_PASSWORD=your_neo4j_password
+     ```
 
 ## Running the Application
 
-1. Start the backend server:
-```bash
-cd backend
-python main.py
-```
+1. **Start the backend server:**
+   ```bash
+   cd backend
+   python main.py
+   ```
 
-2. In a new terminal, start the frontend server:
-```bash
-cd frontend
-npm run dev
-```
+2. **Start the frontend server (in a new terminal):**
+   ```bash
+   cd frontend
+   npm run dev
+   ```
 
 ## API Documentation
 
-Once the backend is running, you can access the API documentation at:
-- Swagger UI: http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc
+Interactive API documentation is available once the backend is running:
+- Swagger UI: [http://localhost:8000/docs](http://localhost:8000/docs)
+- ReDoc: [http://localhost:8000/redoc](http://localhost:8000/redoc)
 
 ## Available Endpoints
 
 ### Restaurant Recommendations
-- `GET /restaurants/popular`: Get popular restaurants
-  - Returns 10 random restaurants with more than 200 reviews and rating >= 4.5
-  - No parameters required
 
-- `GET /recommendations/by-location`: Get location-based recommendations
-  - Parameters:
-    - latitude (float, Required): Location latitude
-    - longitude (float, Required): Location longitude
-    - max_distance (integer, Required): Maximum search radius in meters
-    - categories (array[string], Optional): List of preferred categories
-    - attributes (array[string], Optional): List of desired attributes
-    - weights (object, Optional): Weighting of criteria in percent (e.g., {"price": 20, "rating": 50, "distance": 30})
+- `GET /restaurants/popular`  
+  Returns 10 random restaurants with more than 200 reviews and a rating of at least 4.5.  
+  **Parameters:** None
 
-- `GET /recommendations/by-city`: Get city-based recommendations
-  - Parameters:
-    - city (string, Required): Name of the city
-    - categories (array[string], Optional): List of preferred categories
-    - attributes (array[string], Optional): List of desired attributes
-    - weights (object, Optional): Weighting of criteria in percent (e.g., {"price": 40, "rating": 60})
+- `GET /recommendations/by-location`  
+  Location-based recommendations.  
+  **Parameters:**  
+    - `latitude` (float, required): Location latitude  
+    - `longitude` (float, required): Location longitude  
+    - `max_distance` (integer, required): Maximum search radius in meters  
+    - `categories` (array[string], optional): Preferred categories  
+    - `attributes` (array[string], optional): Desired attributes  
+    - `weights` (object, optional): Criteria weighting in percent (e.g., `{"price": 20, "rating": 50, "distance": 30}`)
 
-- `GET /users/{user_name}/recommendations`: Get user-specific recommendations
-  - Parameters:
-    - user_name (string, Required): The unique identifier of the user
-    - city (string, Required): The city for which to generate recommendations
-    - categories (array[string], Optional): Specific categories to filter by
-    - attributes (array[string], Optional): Specific attributes to filter by
+- `GET /recommendations/by-city`  
+  City-based recommendations.  
+  **Parameters:**  
+    - `city` (string, required): City name  
+    - `categories` (array[string], optional): Preferred categories  
+    - `attributes` (array[string], optional): Desired attributes  
+    - `weights` (object, optional): Criteria weighting in percent (e.g., `{"price": 40, "rating": 60}`)
+
+- `GET /users/{user_name}/recommendations`  
+  User-specific recommendations.  
+  **Parameters:**  
+    - `user_name` (string, required): User identifier  
+    - `city` (string, required): City for recommendations  
+    - `categories` (array[string], optional): Filter by categories  
+    - `attributes` (array[string], optional): Filter by attributes
 
 ## Features
 
-- **Popular Restaurants**: Find highly-rated restaurants with significant review counts
-- **Location-Based Recommendations**: Find restaurants near a specific location with customizable criteria
-- **City-Based Recommendations**: Discover restaurants in a specific city with filtering options
-- **User-Specific Recommendations**: Get personalized recommendations based on user preferences and history
-- **Advanced Filtering**: Filter by categories, attributes, and custom weights
-- **Customizable Scoring**: Weight different factors like price, rating, and distance
+- **Popular Restaurants:** Find highly-rated restaurants with significant review counts
+- **Location-Based Recommendations:** Discover restaurants near a specific location with customizable filters
+- **City-Based Recommendations:** Explore restaurants in a given city with advanced filtering
+- **User-Specific Recommendations:** Personalized suggestions based on user preferences and history
+- **Advanced Filtering:** Filter by categories, attributes, and custom weights
+- **Customizable Scoring:** Adjust the importance of price, rating, and distance
  
