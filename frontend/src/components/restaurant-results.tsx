@@ -278,7 +278,7 @@ export default function RestaurantResults({ searchCriteria }: RestaurantResultsP
                       }}
                     >
                       <ExternalLink className="w-4 h-4 mr-2" />
-                      Mehr Details
+                      More Details
                     </Button>
                     {restaurant.phone && (
                       <Button 
@@ -290,7 +290,7 @@ export default function RestaurantResults({ searchCriteria }: RestaurantResultsP
                         }}
                       >
                         <Phone className="w-4 h-4 mr-2" />
-                        Anrufen
+                        Call
                       </Button>
                     )}
                   </div>
