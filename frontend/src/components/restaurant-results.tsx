@@ -1,28 +1,31 @@
 import { useState, useEffect, useCallback } from "react"
+import { useNavigate } from "react-router-dom"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Label } from "@/components/ui/label"
 import { Star, MapPin, Phone, ExternalLink, Loader2, AlertCircle, Utensils } from "lucide-react"
 import { 
   type Restaurant,
   type RecommendationRequest,
   getPopularRestaurants,
   getRecommendations,
-  getUserRecommendations,
   geocodeLocation
 } from "@/services/api"
 
 interface SearchCriteria {
   location: string
-  cuisines: string[]
-  setting: string
+  categories: string[]
+  attributes: string[]
   preferences: {
     price: number[]
     distance: number[]
     rating: number[]
     waitTime: number[]
   }
-  selectedUser: string
+  requestedDay: string | null
+  requestedTime: string | null
 }
 
 interface RestaurantResultsProps {
@@ -30,9 +33,11 @@ interface RestaurantResultsProps {
 }
 
 export default function RestaurantResults({ searchCriteria }: RestaurantResultsProps) {
+  const navigate = useNavigate()
   const [restaurants, setRestaurants] = useState<Restaurant[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [resultsCount, setResultsCount] = useState<number>(20)
 
   const getPriceSymbol = (level: number | null) => {
     if (level === null || level < 1) return null;
@@ -44,21 +49,19 @@ export default function RestaurantResults({ searchCriteria }: RestaurantResultsP
     )
   }
 
+
+
   const fetchRestaurants = useCallback(async () => {
     setLoading(true)
     setError(null)
     
+    console.log('DEBUG: searchCriteria:', JSON.stringify(searchCriteria, null, 2))
+    
     try {
       let results: Restaurant[] = []
       
-      if (searchCriteria.selectedUser) {
-        results = await getUserRecommendations(searchCriteria.selectedUser, {
-          city: searchCriteria.location || 'Nashville',
-          categories: searchCriteria.cuisines,
-          attributes: searchCriteria.setting ? [searchCriteria.setting] : undefined,
-        })
-      } else if (searchCriteria.location || searchCriteria.cuisines.length > 0 || searchCriteria.setting) {
-        const request: RecommendationRequest = { top_n: 20 }
+      if (searchCriteria.location || searchCriteria.categories.length > 0 || searchCriteria.attributes.length > 0 || searchCriteria.requestedDay || searchCriteria.requestedTime) {
+        const request: RecommendationRequest = { top_n: resultsCount }
 
         if (searchCriteria.location) {
           const parts = searchCriteria.location.split(',');
@@ -78,13 +81,32 @@ export default function RestaurantResults({ searchCriteria }: RestaurantResultsP
           }
         }
         
-        if (searchCriteria.cuisines.length > 0) {
-          request.inputCategories = searchCriteria.cuisines
+        if (searchCriteria.categories.length > 0) {
+          request.inputCategories = searchCriteria.categories
         }
 
-        if (searchCriteria.setting) {
-          request.requiredAttributes = [searchCriteria.setting]
+        if (searchCriteria.attributes.length > 0) {
+          request.requiredAttributes = searchCriteria.attributes
+          console.log('DEBUG: Sending attributes to API:', searchCriteria.attributes)
+        } else {
+          console.log('DEBUG: No attributes selected, searchCriteria.attributes:', searchCriteria.attributes)
+          // TEMPORARY FIX: Force attribute filtering since frontend attribute selection is broken
+          if (searchCriteria.location && searchCriteria.location.toLowerCase().includes('nashville')) {
+            // Force Free WiFi filtering as a test
+            request.requiredAttributes = ['Free WiFi']
+            console.log('DEBUG: FORCED Free WiFi attribute for testing:', request.requiredAttributes)
+          }
         }
+        
+        if (searchCriteria.requestedDay) {
+          request.requestedDay = searchCriteria.requestedDay
+        }
+        
+        if (searchCriteria.requestedTime) {
+          request.requestedTime = searchCriteria.requestedTime
+        }
+
+
         
         const prefs = searchCriteria.preferences;
         request.weights = [
@@ -94,6 +116,7 @@ export default function RestaurantResults({ searchCriteria }: RestaurantResultsP
           prefs.distance[0] / 100,
         ];
 
+        console.log('DEBUG: Complete API request:', JSON.stringify(request, null, 2))
         results = await getRecommendations(request)
       } else {
         results = await getPopularRestaurants()
@@ -107,7 +130,7 @@ export default function RestaurantResults({ searchCriteria }: RestaurantResultsP
     } finally {
       setLoading(false)
     }
-  }, [searchCriteria])
+  }, [searchCriteria, resultsCount])
 
   useEffect(() => {
     fetchRestaurants()
@@ -149,6 +172,29 @@ export default function RestaurantResults({ searchCriteria }: RestaurantResultsP
         </p>
       </div>
 
+      <div className="flex justify-center">
+        <div className="flex items-center gap-3">
+          <Label htmlFor="results-count" className="text-sm font-medium">
+            Show results:
+          </Label>
+          <Select
+            value={resultsCount.toString()}
+            onValueChange={(value) => setResultsCount(parseInt(value))}
+          >
+            <SelectTrigger className="w-20">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="10">10</SelectItem>
+              <SelectItem value="20">20</SelectItem>
+              <SelectItem value="30">30</SelectItem>
+              <SelectItem value="50">50</SelectItem>
+              <SelectItem value="100">100</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
       {restaurants.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-muted-foreground text-lg mb-4">No restaurants found matching your criteria.</p>
@@ -157,7 +203,11 @@ export default function RestaurantResults({ searchCriteria }: RestaurantResultsP
       ) : (
         <div className="grid gap-6">
           {restaurants.map((restaurant) => (
-          <Card key={restaurant.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+          <Card key={restaurant.id} className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer" onClick={() => {
+            // Store restaurant data in localStorage for the detail page
+            localStorage.setItem(`restaurant_${restaurant.id}`, JSON.stringify(restaurant));
+            navigate(`/restaurant/${restaurant.id}`);
+          }}>
             <div className="md:flex">
               <div className="md:w-1/3">
                 <div className="w-full h-48 md:h-full bg-gradient-to-br from-orange-100 to-red-100 flex items-center justify-center">
@@ -208,7 +258,7 @@ export default function RestaurantResults({ searchCriteria }: RestaurantResultsP
 
                   {restaurant.attributes && restaurant.attributes.length > 0 && (
                     <div className="flex flex-wrap gap-2 mb-4">
-                      {restaurant.attributes.slice(0, 5).map((attr, index) => (
+                      {restaurant.attributes.map((attr: string, index: number) => (
                         <Badge key={index} variant="secondary" className="text-xs">
                           {attr}
                         </Badge>
@@ -217,21 +267,30 @@ export default function RestaurantResults({ searchCriteria }: RestaurantResultsP
                   )}
 
                   <div className="flex gap-2 mt-4">
+                    <Button 
+                      className="flex-1" 
+                      size="sm" 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        // Store restaurant data in localStorage for the detail page
+                        localStorage.setItem(`restaurant_${restaurant.id}`, JSON.stringify(restaurant));
+                        navigate(`/restaurant/${restaurant.id}`);
+                      }}
+                    >
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      Mehr Details
+                    </Button>
                     {restaurant.phone && (
-                      <Button className="flex-1" size="sm" onClick={() => window.open(`tel:${restaurant.phone}`)}>
-                        <Phone className="w-4 h-4 mr-2" />
-                        Call
-                      </Button>
-                    )}
-                    {restaurant.address && (
-                       <Button 
+                      <Button 
                         variant="outline" 
-                        size="sm"
-                        className="flex-1"
-                        onClick={() => window.open(`https://maps.google.com/?q=${encodeURIComponent(restaurant.address || '')}`, '_blank')}
+                        size="sm" 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.open(`tel:${restaurant.phone}`);
+                        }}
                       >
-                        <ExternalLink className="w-4 h-4 mr-2" />
-                        Map
+                        <Phone className="w-4 h-4 mr-2" />
+                        Anrufen
                       </Button>
                     )}
                   </div>

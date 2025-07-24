@@ -26,8 +26,7 @@ export default function LocationSelector({ onLocationChange }: LocationSelectorP
         const fetchedRestaurants = await getPopularRestaurants()
         setPopularRestaurants(fetchedRestaurants)
 
-        const cities = [...new Set(fetchedRestaurants.map(r => r.address).filter(Boolean) as string[])]
-        setPopularCities(cities.sort())
+        setPopularCities(["Philadelphia", "Ashland City", "Affton", "Nashville", "Tampa Bay", "Indianapolis", "Largo"])
         
         setError(null)
       } catch (err) {
@@ -95,7 +94,7 @@ export default function LocationSelector({ onLocationChange }: LocationSelectorP
               key={restaurant.id}
               variant={selectedLocation === `${restaurant.name}, ${restaurant}` ? "default" : "outline"}
               className="justify-start h-auto p-3 text-left"
-              onClick={() => handleLocationSelect(`${restaurant.name}, ${restaurant.address}`)}
+              onClick={() => handleLocationSelect(`${restaurant.name}`)}
             >
               <Building className="w-4 h-4 mr-2 flex-shrink-0" />
               <div className="flex flex-col">

@@ -59,7 +59,7 @@ async def get_recommendations(
     latitude: Optional[float] = None,
     longitude: Optional[float] = None,
     inputCategories: Optional[List[str]] = Query(None),
-    maxDistance: Optional[int] = None,
+    maxDistance: Optional[float] = None,
     requiredAttributes: Optional[List[str]] = Query(None),
     requestedDay: Optional[str] = None,
     requestedTime: Optional[str] = None,

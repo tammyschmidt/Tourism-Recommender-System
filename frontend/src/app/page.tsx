@@ -8,11 +8,12 @@ import { Slider } from "@/components/ui/slider"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
-import { MapPin, Search, Users, Utensils, Star, Clock, Euro, Navigation } from "lucide-react"
+import { MapPin, Search, Utensils, Star, Clock, Euro, Navigation } from "lucide-react"
 import LocationSelector from "@/components/location-selector"
-import CuisineSelector from "@/components/cuisine-selector"
-import SettingSelector from "@/components/setting-selector"
-import UserSelector from "@/components/user-selector"
+import CategorySelector from "@/components/category-selector"
+import AttributeSelector from "@/components/attribute-selector"
+
+import OpeningHoursSelector from "@/components/opening-hours-selector"
 import RestaurantResults from "@/components/restaurant-results"
 
 interface Preferences {
@@ -24,37 +25,41 @@ interface Preferences {
 
 interface SearchCriteria {
   location: string
-  cuisines: string[]
-  setting: string
+  categories: string[]
+  attributes: string[]
   preferences: Preferences
-  selectedUser: string
+  requestedDay: string | null
+  requestedTime: string | null
 }
 
 export default function RestaurantFinder() {
   const [activeTab, setActiveTab] = useState("criteria")
   const [searchCriteria, setSearchCriteria] = useState<SearchCriteria>({
     location: "",
-    cuisines: [],
-    setting: "",
+    categories: [],
+    attributes: [],
     preferences: {
       price: [50],
       distance: [50],
       rating: [50],
       waitTime: [50],
     },
-    selectedUser: "",
+
+    requestedDay: null,
+    requestedTime: null,
   })
 
   const handleLocationChange = (location: string) => {
     setSearchCriteria((prev) => ({ ...prev, location }))
   }
 
-  const handleCuisinesChange = (cuisines: string[]) => {
-    setSearchCriteria((prev) => ({ ...prev, cuisines }))
+  const handleCategoriesChange = (categories: string[]) => {
+    setSearchCriteria((prev) => ({ ...prev, categories }))
   }
 
-  const handleSettingChange = (setting: string) => {
-    setSearchCriteria((prev) => ({ ...prev, setting }))
+  const handleAttributeChange = (attributes: string[]) => {
+    console.log('DEBUG: handleAttributeChange called with:', attributes)
+    setSearchCriteria((prev) => ({ ...prev, attributes }))
   }
 
   const handlePreferenceChange = (key: keyof Preferences, value: number[]) => {
@@ -64,15 +69,17 @@ export default function RestaurantFinder() {
     }))
   }
 
-  const handleUserChange = (user: string) => {
-    setSearchCriteria((prev) => ({ ...prev, selectedUser: user }))
+
+
+  const handleOpeningHoursChange = (day: string | null, time: string | null) => {
+    setSearchCriteria((prev) => ({ ...prev, requestedDay: day, requestedTime: time }))
   }
 
   const handleSearch = () => {
     setActiveTab("results")
   }
 
-  const isSearchReady = searchCriteria.location || searchCriteria.selectedUser
+  const isSearchReady = searchCriteria.location
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 p-4">
@@ -95,50 +102,42 @@ export default function RestaurantFinder() {
           </TabsList>
 
           <TabsContent value="criteria" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <MapPin className="w-5 h-5 text-orange-500" />
-                    Location (Required)
-                  </CardTitle>
-                  <CardDescription>Choose a restaurant, enter a place, or name a city</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <LocationSelector onLocationChange={handleLocationChange} />
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Users className="w-5 h-5 text-blue-500" />
-                    Restaurant Recommendation
-                  </CardTitle>
-                  <CardDescription>Or select a user for similar recommendations</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <UserSelector onUserChange={handleUserChange} />
-                </CardContent>
-              </Card>
-            </div>
+            <Card className="bg-gradient-to-r from-orange-50 to-red-50">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center gap-3 text-xl">
+                  <MapPin className="w-6 h-6 text-orange-500" />
+                  Location (Required)
+                </CardTitle>
+                <CardDescription className="text-base">Choose a restaurant, enter a place, or name a city to get started</CardDescription>
+              </CardHeader>
+              <CardContent className="pt-2">
+                <LocationSelector onLocationChange={handleLocationChange} />
+              </CardContent>
+            </Card>
 
             <Card>
               <CardHeader>
-                <CardTitle>Optional filters</CardTitle>
-                <CardDescription>Refine your search with additional criteria</CardDescription>
+                <CardTitle className="text-xl">Optional filters</CardTitle>
+                <CardDescription className="text-base">Refine your search with additional criteria</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div>
-                  <Label className="text-base font-medium mb-3 block">Cuisine</Label>
-                  <CuisineSelector onCuisinesChange={handleCuisinesChange} />
+                  <Label className="text-base font-medium mb-3 block">Categories</Label>
+                  <CategorySelector onCategoriesChange={handleCategoriesChange} />
                 </div>
 
                 <Separator />
 
                 <div>
-                  <Label className="text-base font-medium mb-3 block">Setting</Label>
-                  <SettingSelector onSettingChange={handleSettingChange} />
+                  <Label className="text-base font-medium mb-3 block">Attributes</Label>
+                  <AttributeSelector onAttributeChange={handleAttributeChange} />
+                </div>
+
+                <Separator />
+
+                <div>
+                  <Label className="text-base font-medium mb-3 block">Opening Hours</Label>
+                  <OpeningHoursSelector onOpeningHoursChange={handleOpeningHoursChange} />
                 </div>
 
                 <Separator />
@@ -201,7 +200,7 @@ export default function RestaurantFinder() {
                       <div className="flex items-center justify-between">
                         <Label className="flex items-center gap-2">
                           <Clock className="w-4 h-4" />
-                          Cuisine Similarity
+                          Category Similarity
                         </Label>
                         <span className="text-sm text-gray-500">{searchCriteria.preferences.waitTime[0]}%</span>
                       </div>
@@ -219,9 +218,10 @@ export default function RestaurantFinder() {
             </Card>
 
             {(searchCriteria.location ||
-              searchCriteria.selectedUser ||
-              searchCriteria.cuisines.length > 0 ||
-              searchCriteria.setting) && (
+              searchCriteria.categories.length > 0 ||
+              searchCriteria.attributes.length > 0 ||
+              searchCriteria.requestedDay ||
+              searchCriteria.requestedTime) && (
               <Card>
                 <CardHeader>
                   <CardTitle>Current Selection</CardTitle>
@@ -234,18 +234,22 @@ export default function RestaurantFinder() {
                         {searchCriteria.location}
                       </Badge>
                     )}
-                    {searchCriteria.selectedUser && (
-                      <Badge variant="secondary" className="flex items-center gap-1">
-                        <Users className="w-3 h-3" />
-                        {searchCriteria.selectedUser}
-                      </Badge>
-                    )}
-                    {searchCriteria.cuisines.map((cuisine) => (
-                      <Badge key={cuisine} variant="outline">
-                        {cuisine}
+                    {searchCriteria.categories.map((category: string) => (
+                      <Badge key={category} variant="outline">
+                        {category}
                       </Badge>
                     ))}
-                    {searchCriteria.setting && <Badge variant="outline">{searchCriteria.setting}</Badge>}
+                    {searchCriteria.attributes.map((attribute) => (
+                      <Badge key={attribute} variant="outline">{attribute}</Badge>
+                    ))}
+                    {(searchCriteria.requestedDay || searchCriteria.requestedTime) && (
+                      <Badge variant="outline" className="bg-blue-50 border-blue-200">
+                        <Clock className="w-3 h-3 mr-1" />
+                        {searchCriteria.requestedDay}
+                        {searchCriteria.requestedDay && searchCriteria.requestedTime && " "}
+                        {searchCriteria.requestedTime}
+                      </Badge>
+                    )}
                   </div>
                 </CardContent>
               </Card>

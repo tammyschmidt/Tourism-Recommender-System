@@ -61,17 +61,6 @@ export const getRecommendations = async (request: RecommendationRequest): Promis
     }
 };
 
-export const getUserRecommendations = async (userName: string, request: UserRecommendationRequest): Promise<Restaurant[]> => {
-    try {
-        const url = `/users/${encodeURIComponent(userName)}/recommendations`;
-        const response = await apiClient.get<Restaurant[]>(url, { params: request });
-        return response.data;
-    } catch (error) {
-        console.error(`Error fetching recommendations for user ${userName}:`, error);
-        throw error;
-    }
-};
-
 export const geocodeLocation = async (location: string): Promise<{ latitude: number; longitude: number }> => {
     const cityCoordinates: Record<string, { latitude: number; longitude: number }> = {
         'new york': { latitude: 40.7128, longitude: -74.0060 },
