@@ -1,6 +1,6 @@
 # Restaurant Recommendation System
 
-This repository contains a full-stack application for restaurant recommendations, leveraging the Yelp dataset. The system supports both content-based and collaborative filtering, and is designed for easy reproducibility and future development.
+This repository contains a full-stack application for content-based restaurant recommendations, leveraging the Yelp dataset.
 
 ## Documentation & Reproducibility
 
@@ -69,38 +69,28 @@ Interactive API documentation is available once the backend is running:
   Returns 10 random restaurants with more than 200 reviews and a rating of at least 4.5.  
   **Parameters:** None
 
-- `GET /recommendations/by-location`  
-  Location-based recommendations.  
+- `GET /recommendations`    
   **Parameters:**  
-    - `latitude` (float, required): Location latitude  
-    - `longitude` (float, required): Location longitude  
-    - `max_distance` (integer, required): Maximum search radius in meters  
-    - `categories` (array[string], optional): Preferred categories  
-    - `attributes` (array[string], optional): Desired attributes  
-    - `weights` (object, optional): Criteria weighting in percent (e.g., `{"price": 20, "rating": 50, "distance": 30}`)
+   One of the following is required:
+    - `restaurant_id` (string): Restaurant ID for recommendations similar to a given restaurant
+    - `city` (string): City name for recommendations within a city
+    - `coordinates` (float[2]): Location latitude and longitude  
+   Optional Parameters:
+    - `inputCategories` (array[string]): Preferred categories  
+    - `maxDistance` (integer): Maximum search radius in meters  
+    - `inputCategories` (array[string]): Preferred categories  
+    - `requiredAttributes` (array[string]): Desired attributes  
+    - `time` (string[2]): Desired weekday (Weekday) and time (HH:mm) to check for opening hours
+    - `weights` (float[4]): Criteria weighting from [0,1] for category similarity, rating, distance and price)
+    - `top_n` (int): Number of results to return
 
-- `GET /recommendations/by-city`  
-  City-based recommendations.  
-  **Parameters:**  
-    - `city` (string, required): City name  
-    - `categories` (array[string], optional): Preferred categories  
-    - `attributes` (array[string], optional): Desired attributes  
-    - `weights` (object, optional): Criteria weighting in percent (e.g., `{"price": 40, "rating": 60}`)
-
-- `GET /users/{user_name}/recommendations`  
-  User-specific recommendations.  
-  **Parameters:**  
-    - `user_name` (string, required): User identifier  
-    - `city` (string, required): City for recommendations  
-    - `categories` (array[string], optional): Filter by categories  
-    - `attributes` (array[string], optional): Filter by attributes
 
 ## Features
 
 - **Popular Restaurants:** Find highly-rated restaurants with significant review counts
-- **Location-Based Recommendations:** Discover restaurants near a specific location with customizable filters
-- **City-Based Recommendations:** Explore restaurants in a given city with advanced filtering
-- **User-Specific Recommendations:** Personalized suggestions based on user preferences and history
-- **Advanced Filtering:** Filter by categories, attributes, and custom weights
-- **Customizable Scoring:** Adjust the importance of price, rating, and distance
+- **Restaurant-Based Recommendations:** Get restaurants that are similar to a given restaurant
+- **City-Based Recommendations:** Explore restaurants in a given city
+- **Location-Based Recommendations:** Discover restaurants near a specific location
+- **Advanced Filtering:** Filter attributes, maximum distance, opening hours
+- **Customizable Scoring:** Adjust the importance of category similarity, price, rating, and distance
  
