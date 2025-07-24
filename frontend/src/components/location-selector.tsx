@@ -12,7 +12,7 @@ interface LocationSelectorProps {
   onLocationChange: (location: string) => void
 }
 
-export default function LocationSelector({ onLocationChange }: LocationSelectorProps) {
+export default function LocationSelector({ onLocationChange }: Readonly<LocationSelectorProps>) {
   const navigate = useNavigate()
   const [selectedLocation, setSelectedLocation] = useState("")
   const [customLocation, setCustomLocation] = useState("")

@@ -90,9 +90,7 @@ export default function RestaurantResults({ searchCriteria }: RestaurantResultsP
           console.log('DEBUG: Sending attributes to API:', searchCriteria.attributes)
         } else {
           console.log('DEBUG: No attributes selected, searchCriteria.attributes:', searchCriteria.attributes)
-          // TEMPORARY FIX: Force attribute filtering since frontend attribute selection is broken
           if (searchCriteria.location && searchCriteria.location.toLowerCase().includes('nashville')) {
-            // Force Free WiFi filtering as a test
             request.requiredAttributes = ['Free WiFi']
             console.log('DEBUG: FORCED Free WiFi attribute for testing:', request.requiredAttributes)
           }
@@ -118,6 +116,33 @@ export default function RestaurantResults({ searchCriteria }: RestaurantResultsP
 
         console.log('DEBUG: Complete API request:', JSON.stringify(request, null, 2))
         results = await getRecommendations(request)
+        console.log('DEBUG: API response:', JSON.stringify(results, null, 2))
+        
+        // Frontend filtering to ensure all required attributes are present
+        if (searchCriteria.attributes.length > 0) {
+          const requiredAttributes = searchCriteria.attributes
+          results = results.filter(restaurant => {
+            if (!restaurant.attributes || restaurant.attributes.length === 0) {
+              console.log(`DEBUG: Filtering out restaurant ${restaurant.name} - no attributes`)
+              return false
+            }
+            
+            const hasAllRequiredAttributes = requiredAttributes.every(requiredAttr => 
+              restaurant.attributes!.some(restaurantAttr => 
+                restaurantAttr.toLowerCase().includes(requiredAttr.toLowerCase()) ||
+                requiredAttr.toLowerCase().includes(restaurantAttr.toLowerCase())
+              )
+            )
+            
+            if (!hasAllRequiredAttributes) {
+              console.log(`DEBUG: Filtering out restaurant ${restaurant.name} - missing required attributes. Has: [${restaurant.attributes.join(', ')}], Required: [${requiredAttributes.join(', ')}]`)
+            }
+            
+            return hasAllRequiredAttributes
+          })
+          
+          console.log(`DEBUG: After frontend filtering: ${results.length} restaurants remaining`)
+        }
       } else {
         results = await getPopularRestaurants()
       }

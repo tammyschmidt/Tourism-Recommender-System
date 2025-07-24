@@ -13,7 +13,7 @@ import LocationSelector from "@/components/location-selector"
 import CategorySelector from "@/components/category-selector"
 import AttributeSelector from "@/components/attribute-selector"
 
-import OpeningHoursSelector from "@/components/opening-hours-selector"
+
 import RestaurantResults from "@/components/restaurant-results"
 
 interface Preferences {
@@ -71,12 +71,28 @@ export default function RestaurantFinder() {
 
 
 
-  const handleOpeningHoursChange = (day: string | null, time: string | null) => {
-    setSearchCriteria((prev) => ({ ...prev, requestedDay: day, requestedTime: time }))
-  }
-
   const handleSearch = () => {
     setActiveTab("results")
+  }
+
+  const handleTabChange = (value: string) => {
+    if (value === "criteria") {
+      // Reset search criteria when switching back to criteria tab
+      setSearchCriteria({
+        location: "",
+        categories: [],
+        attributes: [],
+        preferences: {
+          price: [50],
+          distance: [50],
+          rating: [50],
+          waitTime: [50],
+        },
+        requestedDay: null,
+        requestedTime: null,
+      })
+    }
+    setActiveTab(value)
   }
 
   const isSearchReady = searchCriteria.location
@@ -89,7 +105,7 @@ export default function RestaurantFinder() {
           <p className="text-lg text-gray-600">Find the perfect restaurant for any occasion</p>
         </div>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
           <TabsList className="grid w-full grid-cols-2 mb-6">
             <TabsTrigger value="criteria" className="flex items-center gap-2">
               <Search className="w-4 h-4" />
@@ -133,14 +149,7 @@ export default function RestaurantFinder() {
                   <AttributeSelector onAttributeChange={handleAttributeChange} />
                 </div>
 
-                <Separator />
 
-                <div>
-                  <Label className="text-base font-medium mb-3 block">Opening Hours</Label>
-                  <OpeningHoursSelector onOpeningHoursChange={handleOpeningHoursChange} />
-                </div>
-
-                <Separator />
 
                 <div>
                   <Label className="text-base font-medium mb-4 block">Weight Preferences</Label>
