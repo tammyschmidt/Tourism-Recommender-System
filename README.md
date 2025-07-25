@@ -45,8 +45,7 @@ This README serves as comprehensive documentation to ensure that anyone can repr
 
 1. **Start the backend server:**
    ```bash
-   cd backend
-   python main.py
+   uvicorn backend.main:app --reload
    ```
 
 2. **Start the frontend server (in a new terminal):**
