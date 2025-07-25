@@ -167,7 +167,9 @@ if __name__ == "__main__":
 
     try:
         recommendations = recommender.get_recommendations(**kwargs)
-        print(recommendations)
+        for r in recommendations:
+            print(r)
+            print("-----------")
         print("Recommendation query ran successfully.")
     finally:
         recommender.close()
