@@ -1,17 +1,19 @@
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
-import { MapPin, Building, Search, Loader2, AlertTriangle } from "lucide-react"
+import { MapPin, Building, Search, Loader2, AlertTriangle, ExternalLink } from "lucide-react"
 import { getPopularRestaurants, type Restaurant } from "@/services/api"
 
 interface LocationSelectorProps {
   onLocationChange: (location: string) => void
 }
 
-export default function LocationSelector({ onLocationChange }: LocationSelectorProps) {
+export default function LocationSelector({ onLocationChange }: Readonly<LocationSelectorProps>) {
+  const navigate = useNavigate()
   const [selectedLocation, setSelectedLocation] = useState("")
   const [customLocation, setCustomLocation] = useState("")
   const [popularRestaurants, setPopularRestaurants] = useState<Restaurant[]>([])
@@ -26,8 +28,7 @@ export default function LocationSelector({ onLocationChange }: LocationSelectorP
         const fetchedRestaurants = await getPopularRestaurants()
         setPopularRestaurants(fetchedRestaurants)
 
-        const cities = [...new Set(fetchedRestaurants.map(r => r.address).filter(Boolean) as string[])]
-        setPopularCities(cities.sort())
+        setPopularCities(["Philadelphia", "Ashland City", "Affton", "Nashville", "Tampa Bay", "Indianapolis", "Largo"])
         
         setError(null)
       } catch (err) {
@@ -93,15 +94,19 @@ export default function LocationSelector({ onLocationChange }: LocationSelectorP
           {popularRestaurants.map((restaurant) => (
             <Button
               key={restaurant.id}
-              variant={selectedLocation === `${restaurant.name}, ${restaurant}` ? "default" : "outline"}
-              className="justify-start h-auto p-3 text-left"
-              onClick={() => handleLocationSelect(`${restaurant.name}, ${restaurant.address}`)}
+              variant="outline"
+              className="justify-start h-auto p-3 text-left hover:bg-primary hover:text-primary-foreground"
+              onClick={() => {
+                localStorage.setItem(`restaurant_${restaurant.id}`, JSON.stringify(restaurant));
+                navigate(`/restaurant/${restaurant.id}`);
+              }}
             >
               <Building className="w-4 h-4 mr-2 flex-shrink-0" />
-              <div className="flex flex-col">
+              <div className="flex flex-col flex-1">
                 <span className="font-semibold">{restaurant.name}</span>
                 <span className="text-xs text-muted-foreground">{restaurant.address}</span>
               </div>
+              <ExternalLink className="w-4 h-4 ml-2 flex-shrink-0" />
             </Button>
           ))}
         </div>

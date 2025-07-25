@@ -21,7 +21,7 @@ class AdvancedContentBasedRecommender:
                 result = session.run(res_query)
                 return [record.data() for record in result]
 
-    def get_recommendations(self, inputCategories=[], city=None, restaurant_id=None, coordinates=None, maxDistance=None, requiredAttributes=[], time=None, weights=(1, 0.5, 0.25, 0), top_n=5):
+    def get_recommendations(self, inputCategories: list = [], city: str = None, restaurant_id: str = None, coordinates: tuple = None, maxDistance: float = None, requiredAttributes: list = [], time: tuple = None, weights: tuple = (1, 0.5, 0.25, 0), top_n: int = 5) -> list:
         alpha, beta, gamma, delta = weights
         latitude, longitude = coordinates if coordinates else (None, None)
         requestedDay, requestedTime = time if time else (None, None)

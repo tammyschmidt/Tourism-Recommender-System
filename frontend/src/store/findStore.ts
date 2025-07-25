@@ -2,38 +2,38 @@ import { create } from 'zustand';
 
 interface FinderState {
   locationQuery: string;
-  selectedCuisines: string[];
-  selectedSetting: string;
+  selectedCategories: string[];
+  selectedCategory: string;
   weights: {
-    cuisine: number;
-    setting: number;
+    categories: number;
+    category: number;
   };
   setLocationQuery: (query: string) => void;
-  toggleCuisine: (cuisine: string) => void;
-  setSelectedSetting: (setting: string) => void;
-  setWeight: (key: 'cuisine' | 'setting', value: number) => void;
+  toggleCategory: (category: string) => void;
+  setSelectedCategory: (category: string) => void;
+  setWeight: (key: 'categories' | 'category', value: number) => void;
   search: () => void;
 }
 
 export const useFinderStore = create<FinderState>((set, get) => ({
   locationQuery: '',
-  selectedCuisines: [],
-  selectedSetting: 'any',
+  selectedCategories: [],
+  selectedCategory: 'any',
   weights: {
-    cuisine: 50,
-    setting: 50,
+    categories: 50,
+    category: 50,
   },
 
   setLocationQuery: (query) => set({ locationQuery: query }),
 
-  setSelectedSetting: (setting) => set({ selectedSetting: setting }),
+  setSelectedCategory: (category) => set({ selectedCategory: category }),
 
-  toggleCuisine: (cuisine) => set((state) => {
-    const isSelected = state.selectedCuisines.includes(cuisine);
+  toggleCategory: (category) => set((state) => {
+    const isSelected = state.selectedCategories.includes(category);
     return {
-      selectedCuisines: isSelected
-        ? state.selectedCuisines.filter(c => c !== cuisine)
-        : [...state.selectedCuisines, cuisine],
+      selectedCategories: isSelected
+        ? state.selectedCategories.filter(c => c !== category)
+        : [...state.selectedCategories, category],
     };
   }),
 
@@ -45,12 +45,12 @@ export const useFinderStore = create<FinderState>((set, get) => ({
   })),
 
   search: () => {
-    const { locationQuery, selectedCuisines, selectedSetting, weights } = get();
+    const { locationQuery, selectedCategories, selectedCategory, weights } = get();
 
     console.log("--- SUCHE GESTARTET ---");
     console.log("Ort:", locationQuery);
-    console.log("Küchen:", selectedCuisines);
-    console.log("Ambiente:", selectedSetting);
+    console.log("Kategorien:", selectedCategories);
+    console.log("Kategorie:", selectedCategory);
     console.log("Gewichtung:", weights);
     
     alert('Suchkriterien wurden in der Konsole ausgegeben! (Drücke F12)');
